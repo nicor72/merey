@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './merey_logo.png';
 import './App.css';
 
 class App extends Component {
@@ -8,17 +8,16 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
+          <h3>
+            PRONTO!
+          </h3>
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Avenida Apoquindo 7482, Las Condes.
+            <br></br>
+            mereytostaduria@gmail.com
+            <br></br>
+            +56 9 4882 6938
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
         </header>
       </div>
     );
