@@ -1,13 +1,13 @@
-.App {
+/*.App {
   text-align: center;
-}
+}*/
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
+  /*animation: App-logo-spin infinite 20s linear;*/
   height: 40vmin;
 }
 
-.App-header {
+/*.App-header {
   background-color: #000;
   min-height: 100vh;
   display: flex;
@@ -20,4 +20,59 @@
 
 .App-link {
   color: #61dafb;
+}*/
+
+.bg-black {
+  background-color: #000;
+  color: white;
+}
+
+.bg-cream {
+  background-color: #E3E3D2;
+}
+
+.info-title {
+  font-size: 30px;
+  line-height: 32px;
+  padding: 5px 0;
+  color: #222;
+  text-align: center;
+  margin: 60px auto 20px auto;
+  font-weight: 400;
+}
+
+.info-text {
+  font-size: 22px;
+  line-height: 30px;
+  padding: 5px 0;
+  color: #222;
+  text-align: center;
+  font-weight: 400;
+  padding: 10px 0;
+  margin: 40px auto 40px auto;
+  border-bottom: 1px dashed #999;
+  border-top: 1px dashed #999;
+  max-width: 600px;
+}
+
+.info-text2 {
+  font-size: 22px;
+  line-height: 33px;
+  padding: 5px 0;
+  color: #222;
+  text-align: center;
+  font-weight: 400;
+  padding: 10px 0;
+  margin: 40px auto 0px auto;
+  max-width: 650px;
+}
+
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+footer p:first-child {
+  padding-top: 10px;
 }

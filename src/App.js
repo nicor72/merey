@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
-import logo from './merey_logo.png';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
+import { Button } from 'reactstrap';
+import Home from './Home';
+import Empresa from './Empresa';
+import Logo from './components/Logo';
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 
 class App extends Component {
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h3>
-            PRONTO!
-          </h3>
-          <p>
-            Avenida Apoquindo 7482, Las Condes.
-            <br></br>
-            mereytostaduria@gmail.com
-            <br></br>
-            +56 9 4882 6938
-          </p>
-        </header>
-      </div>
+    return ( 
+      <Router>
+        <div>
+          <Logo />
+          <NavBar />
+          <Route exact path="/" component={Home} />
+          <Route path="/empresa" component={Empresa} />
+          <Footer />
+        </div>
+      </Router>
     );
   }
 }
