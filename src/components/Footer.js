@@ -8,7 +8,7 @@ class Info extends Component {
         <footer>
           <div className="row justify-content-md-center bg-black">
             <div className="col-md-auto">
-              <p>Avenida Apoquindo 7482, Las Condes - +56 9 4882 6938</p>
+              <p className="small-padding-top">Avenida Apoquindo 7482, Las Condes - +56 9 4882 6938</p>
             </div>
           </div>
           <div className="row justify-content-md-center bg-black">

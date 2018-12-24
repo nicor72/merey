@@ -22,10 +22,15 @@ class Info extends Component {
         </div>
         <div className="row justify-content-md-center">
           <div className="col-md-auto">
-            <div class="info-text2">
+            <div className="info-text2">
                 Realizamos ventas al por mayor a comercios, instituciones restaurantes, comunidades y particulares en todo Chile.<br/><br/>
                 Haga su pedido a través de nuestro formulario.
             </div>
+          </div>
+        </div>
+        <div className="row justify-content-md-center">
+          <div className="col-md-auto">
+            <button type="button" className="btn btn-outline-secondary btn-lg medium-margin-bottom">Contacto</button>
           </div>
         </div>
       </div>

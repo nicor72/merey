@@ -63,7 +63,7 @@
   text-align: center;
   font-weight: 400;
   padding: 10px 0;
-  margin: 40px auto 0px auto;
+  margin: 40px auto 40px auto;
   max-width: 650px;
 }
 
@@ -73,6 +73,10 @@
   margin-left: auto;
 }
 
-footer p:first-child {
-  padding-top: 10px;
+.small-padding-top {
+  padding-top: 20px;
+}
+
+.medium-margin-bottom {
+  margin-bottom: 40px;
 }
