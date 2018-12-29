@@ -1,3 +1,6 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
 /*.App {
   text-align: center;
 }*/
@@ -21,6 +24,11 @@
 .App-link {
   color: #61dafb;
 }*/
+
+.nav-height, .nav-height img {
+  height: 120px;
+  object-fit: fill
+}
 
 .bg-black {
   background-color: #000;
@@ -79,4 +87,29 @@
 
 .medium-margin-bottom {
   margin-bottom: 40px;
+}
+
+.slick-slider img {
+  height: 500px;
+}
+
+.tit-interior_black {
+  font-size: 30px;
+  text-align: left;
+  margin: 0px 0px 00px 0;
+  color: #111;
+  line-height: 30px;
+  font-weight: 400;
+  border-bottom: 2px solid #999;
+  padding-bottom: 5px;
+}
+
+.txt_interior {
+  font-size: 17px;
+  line-height: 22px;
+  padding: 5px 0 300px 0;
+  color: #111;
+  text-align: left;
+  font-weight: 400;
+  margin: 10px 30px 40px 30px;
 }
