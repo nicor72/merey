@@ -4,6 +4,8 @@ import './App.css';
 import { Button } from 'reactstrap';
 import Home from './Home';
 import Empresa from './Empresa';
+import Estamos from './Estamos';
+import Contacto from './Contacto';
 import Logo from './components/Logo';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
@@ -12,11 +14,13 @@ class App extends Component {
   render() {
     return ( 
       <Router>
-        <div>
+        <div className="bg-cream">
           <Logo />
           <NavBar />
           <Route exact path="/" component={Home} />
           <Route path="/empresa" component={Empresa} />
+          <Route path="/estamos" component={Estamos} />
+          <Route path="/contacto" component={Contacto} />
           <Footer />
         </div>
       </Router>
