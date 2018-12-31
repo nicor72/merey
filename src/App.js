@@ -4,6 +4,7 @@ import './App.css';
 import { Button } from 'reactstrap';
 import Home from './Home';
 import Empresa from './Empresa';
+import Productos from './Productos';
 import Estamos from './Estamos';
 import Contacto from './Contacto';
 import Logo from './components/Logo';
@@ -19,6 +20,7 @@ class App extends Component {
           <NavBar />
           <Route exact path="/" component={Home} />
           <Route path="/empresa" component={Empresa} />
+          <Route path="/productos" component={Productos} />
           <Route path="/estamos" component={Estamos} />
           <Route path="/contacto" component={Contacto} />
           <Footer />

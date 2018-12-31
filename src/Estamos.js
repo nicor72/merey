@@ -6,7 +6,7 @@ class Estamos extends Component {
       <div>
       	<div className="container">
 	        <h1 className="sub-main-title">
-	            Visítanos en:
+	            VISITANOS EN:
 	        </h1>
 	        <div className="container-fluid" style={{paddingTop: 30 + 'px'}}>
 	            <div className="map">
@@ -28,11 +28,11 @@ class Estamos extends Component {
 	                        <div className="location-title">Horario de atención</div>
 	                        <div className="location-text">
 	                            <span style={{fontWeight:600}}>Lunes a viernes:</span><br />
-	                             de 9:00 a 20:15 hrs.<br /><br />
+	                             de 9:00 a 21:00 hrs.<br /><br />
 	                        </div>
 	                        <div className="location-text">
-	                            <span style={{fontWeight:600}}>Sábado:</span><br />
-	                             de 9:00 a 18:00 hrs.<br /><br /> 
+	                            <span style={{fontWeight:600}}>Sábados y Domingos:</span><br />
+	                             de 10:00 a 19:00 hrs.<br /><br /> 
 	                        </div>                        
 	                    </div>    
 	                </div>
@@ -40,12 +40,12 @@ class Estamos extends Component {
 	                    <div className="location-div">
 	                        <div className="location-title">Estacionamientos cercanos</div>
 	                        <div className="location-text">
-	                            <span style={{fontWeight:600}}>Parking Parque Forestal:</span><br />
-	                            Parque Forestal: Av. Cardenal Caro 870 <br /><br />
+	                            <span style={{fontWeight:600}}>Super Mercado Santa Isabel:</span><br />
+	                            Av. Apoquindo Nº 7200, Las Condes. <br /><br />
 	                        </div>    
 	                        <div className="location-text">
-	                            <span style={{fontWeight:600}}>Parking Plaza de Armas:</span><br />
-	                            21 de Mayo Frente al 576 <br /><br /> 
+	                       		<span style={{fontWeight:600}}>Copec:</span><br />
+	                            Av. Apoquindo Nº 7520, Las Condes. <br /><br />
 	                        </div>
 	                    </div>   
 	                </div> 
