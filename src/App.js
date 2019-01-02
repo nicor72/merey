@@ -15,7 +15,7 @@ class App extends Component {
   render() {
     return ( 
       <Router>
-        <div className="bg-cream">
+        <div>
           <Logo />
           <NavBar />
           <Route exact path="/" component={Home} />

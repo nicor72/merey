@@ -3,8 +3,8 @@ import Slider from "react-slick";
 
 import mani from './../images/mani.jpg';
 import tiendaMerey from './../images/tienda_merey.jpg';
-import dulces from './../images/dulces.jpg';
 import work from './../images/work.jpg';
+import nuts from './../images/nuts.jpg';
 
 class Carousel extends Component {
   render() {
@@ -24,8 +24,8 @@ class Carousel extends Component {
     };
     return (
       <Slider {...settings}>
-        <img src={dulces} />
-        <img src={work} />
+        <img src={nuts} alt="nuts" />
+        <img src={work} alt="work" />
       </Slider>
     );
   }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import secos from './../images/secos.png';
 
 class Info extends Component {
   render() {
