@@ -4,7 +4,7 @@ class Empresa extends Component {
   render() {
     return (
       <div>
-      	<div className="container">
+      	<div className="container medium-margin-top">
 	        <h1 className="sub-main-title">
 	            NUESTRA EMPRESA
 	        </h1>

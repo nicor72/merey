@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
+import logo from './../images/merey_logo.png';
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isActive: 'home'
+      isActive: this.props.location.pathname
     }
     this.click= this.click.bind(this);
   }
@@ -20,27 +22,65 @@ class NavBar extends Component {
   render() {
     return (
       <div>
-        <div className="row justify-content-md-center">
-          <nav className="col-md-auto navbar navbar-expand-lg navbar-light">
+        <div className="row bg-black">
+          <div className="col-md-3 nav-height">
+            <img src={logo} className="App-logo" alt="logo" />
+          </div>
+          <nav className="col-md-6 navbar navbar-expand-lg navbar-light">
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li className={`nav-item ${this.state.isActive === 'home' ? 'active' : ''}`}>
-                  <Link id="home" to="/" className="nav-link" onClick={this.click}>Home</Link>
+                <li className="nav-item">
+                  <Link 
+                    id="/" 
+                    to="/" 
+                    className={`navMenu-link ${this.state.isActive === '/' ? 'active-link' : ''}`} 
+                    onClick={this.click}
+                  >
+                    Home
+                  </Link>
                 </li>
-                <li className={`nav-item ${this.state.isActive === 'empresa' ? 'active' : ''}`}>
-                  <Link id="empresa" to="/Empresa" className="nav-link" onClick={this.click}>Empresa</Link>
+                <li className="nav-item">
+                  <Link 
+                    id="/empresa" 
+                    to="/empresa" 
+                    className={`navMenu-link ${this.state.isActive === '/empresa' ? 'active-link' : ''}`} 
+                    onClick={this.click}
+                  >
+                    Empresa
+                  </Link>
                 </li>
-                <li className={`nav-item ${this.state.isActive === 'productos' ? 'active' : ''}`}>
-                  <Link id="productos" to="/productos" className="nav-link" onClick={this.click}>Productos</Link>
+                <li className="nav-item">
+                  <Link 
+                    id="/productos"
+                    to="/productos"
+                    className={`navMenu-link ${this.state.isActive === '/productos' ? 'active-link' : ''}`}
+                    onClick={this.click}
+                  >
+                    Productos
+                  </Link>
                 </li>
-                <li className={`nav-item ${this.state.isActive === 'estamos' ? 'active' : ''}`}>
-                  <Link id="estamos" to="/estamos" className="nav-link" onClick={this.click}>Donde estamos</Link>
+                <li className="nav-item">
+                  <Link 
+                    id="/estamos" 
+                    to="/estamos" 
+                    className={`navMenu-link ${this.state.isActive === '/estamos' ? 'active-link' : ''}`}
+                    onClick={this.click}
+                  >
+                    Donde estamos
+                  </Link>
                 </li>
-                <li className={`nav-item ${this.state.isActive === 'contacto' ? 'active' : ''}`}>
-                  <Link id="contacto" to="/contacto" className="nav-link" onClick={this.click}>Contacto</Link>
+                <li className="nav-item">
+                  <Link 
+                    id="/contacto" 
+                    to="/contacto" 
+                    className={`navMenu-link ${this.state.isActive === '/contacto' ? 'active-link' : ''}`}  
+                    onClick={this.click}
+                  >
+                    Contacto
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -51,4 +91,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default withRouter(NavBar);
