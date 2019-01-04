@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import ReactSVG from 'react-svg'
 
 import logo from './../images/merey_logo.png';
+import instagram from './../images/logo-de-instagram.svg';
+import facebook from './../images/facebook-logo.svg';
 
 class NavBar extends Component {
   constructor(props) {
@@ -23,7 +26,7 @@ class NavBar extends Component {
     return (
       <div>
         <div className="row bg-black">
-          <div className="col-md-3 nav-height">
+          <div className="offset-md-1 col-md-2 nav-height">
             <img src={logo} className="App-logo" alt="logo" />
           </div>
           <nav className="col-md-6 navbar navbar-expand-lg navbar-light">
@@ -84,6 +87,18 @@ class NavBar extends Component {
                 </li>
               </ul>
             </div>
+            <a
+              href="https://www.instagram.com/merey.tostaduria/"
+              target="_blank" 
+            >
+              <ReactSVG src={instagram} />
+            </a>
+            <a 
+              href="https://www.facebook.com/merey.tostaduria"
+              target="_blank"
+            >
+              <ReactSVG src={facebook} />
+            </a>
           </nav>
         </div>
       </div>

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Slider from "react-slick";
 
-import mani from './../images/mani.jpg';
+import logoMerey from './../images/merey_logo.png';
 import tiendaMerey from './../images/tienda_merey.jpg';
+import mani from './../images/mani.jpg';
 import clavoOlor from './../images/clavo_olor.jpg';
 import work from './../images/work.jpg';
 import nuts from './../images/nuts.jpg';
@@ -33,11 +34,11 @@ class Carousel extends Component {
         <div>
           <img src={mani} alt="mani" />
         </div>
-        <div>
-          <img src={clavoOlor} alt="clavo de olor" />
+        <div className="nav-height">
+          <img src={logoMerey} alt="logo_merey" />
         </div>
         <div>
-          <img src={nuts} alt="nuts" />
+          <img src={clavoOlor} alt="clavo de olor" />
         </div>
       </Slider>
     );

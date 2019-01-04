@@ -310,3 +310,11 @@
 .item:nth-child(5) {
   background: #c8c8a9;
 }
+
+a svg:hover #facebook {
+  fill: #4267B2;
+}
+
+a svg:hover #instagram { 
+  fill: url(#rg);
+}

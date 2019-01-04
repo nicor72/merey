@@ -6,17 +6,17 @@ import posed from "react-pose";
 
 const LeftInfo = posed.div({
   left: { x: -100, opacity: 0 },
-  right: { x: 0, opacity: 1, delay: 1000 }
+  right: { x: 0, opacity: 1, delay: 500 }
 });
 
 const CenterInfo = posed.div({
   hidden: {opacity: 0 },
-  show: {opacity: 1, delay: 1000 },
+  show: {opacity: 1, delay: 500 },
 });
 
 const RightInfo = posed.div({
   right: { x: 100, opacity: 0 },
-  left: { x: 0, opacity: 1, delay: 1000 }
+  left: { x: 0, opacity: 1, delay: 500 }
 });
 
 class Info extends Component {
