@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import ReactSVG from 'react-svg'
 
-import logo from './../images/merey_logo.png';
+import Logo from './Logo';
+
 import instagram from './../images/logo-de-instagram.svg';
 import facebook from './../images/facebook-logo.svg';
 
@@ -27,7 +28,7 @@ class NavBar extends Component {
       <div>
         <div className="row bg-black">
           <div className="offset-md-1 col-md-2 nav-height">
-            <img src={logo} className="App-logo" alt="logo" />
+            <Logo />
           </div>
           <nav className="col-md-6 navbar navbar-expand-lg navbar-light">
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +43,7 @@ class NavBar extends Component {
                     className={`navMenu-link ${this.state.isActive === '/' ? 'active-link' : ''}`} 
                     onClick={this.click}
                   >
-                    Home
+                    Inicio
                   </Link>
                 </li>
                 <li className="nav-item">

@@ -157,7 +157,7 @@ class Productos extends Component {
             PRODUCTOS
 	        </h1>
             <div className="row">
-              <div className="col-sm-6">
+              <div className="col-sm-5">
                 <Sidebar className="sidebar" pose={isOpen ? 'open' : 'closed'}>
                   {
                     products.map((product, index) => 
