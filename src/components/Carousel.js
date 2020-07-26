@@ -1,12 +1,11 @@
 import React from 'react'
+import { Carousel } from 'react-bootstrap'
 import cerealPlate from '../images/cereal_plate.jpg'
-import Carousel from 'react-bootstrap/Carousel'
 
 export default () =>
   <Carousel>
     <Carousel.Item>
       <img
-        height={500}
         className="d-block w-100"
         src={cerealPlate}
         alt="First slide"

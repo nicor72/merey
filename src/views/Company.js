@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import frutoMerey from './images/fruto_merey.png';
-import castañas from './images/castanas.png';
+// import frutoMerey from './../images/fruto_merey.png';
+// import castañas from './../images/castanas.png';
 
-class Empresa extends Component {
+class Company extends Component {
   render() {
     return (
       <div>
@@ -24,7 +24,7 @@ class Empresa extends Component {
                     en la comuna de las Condes, especialmente en la Av. Apoquindo, esto por nuestra ubicación, somos una empresa familiar dedicada 
                     a la comercialización de frutos del país.<br /><br />
                     
-                    <img src={frutoMerey} style={{float: 'left', padding: 10 + 'px', width: 20 + 'em', height: 20 + 'em'}}/>
+                    {/* <img src={frutoMerey} style={{float: 'left', padding: 10 + 'px', width: 20 + 'em', height: 20 + 'em'}}/> */}
                     
                     <div style={{marginTop: 10 + 'px'}}>
                       La idea fue generar un lugar acogedor en donde podrás comprar productos naturales a precios accesibles y de excelente calidad, 
@@ -50,7 +50,7 @@ class Empresa extends Component {
                     Es conocido también como marañón, caujil o paujil en Puerto Rico, Costa Rica, Cuba, México, Perú, Colombia, Panamá y El Salvador; acayouba, en Argentina y 
                     Castaña de cajú, en Brasil y Chile.<br /><br />
                     
-                    <img src={castañas} style={{float: 'right', padding: 10 + 'px', width: 20 + 'em', height: 20 + 'em'}}/>
+                    {/* <img src={castañas} style={{float: 'right', padding: 10 + 'px', width: 20 + 'em', height: 20 + 'em'}}/> */}
 
                     <div style={{marginTop: 10 + 'px'}}>
                       En Venezuela, los grandes sembradíos de merey se encuentran de forma silvestre al norte del estado Bolívar y al sur de Anzoátegui 
@@ -78,4 +78,4 @@ class Empresa extends Component {
   }
 }
 
-export default Empresa;
+export default Company;

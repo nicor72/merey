@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import ReactDOM               from 'react-dom';
 import IntersectionVisible    from 'react-intersection-visible';
 import posed from "react-pose";
 

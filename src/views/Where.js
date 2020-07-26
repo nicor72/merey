@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Estamos extends Component {
+class Where extends Component {
   render() {
     return (
       <div>
@@ -63,4 +63,4 @@ class Estamos extends Component {
   }
 }
 
-export default Estamos;
+export default Where;
