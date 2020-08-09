@@ -1,112 +1,67 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
-import { Container, Row, Col, Button, Toast } from 'react-bootstrap'
 import { PRODUCTS_BY_DEPARTMENT } from '../graphql/queries/productos'
-import { useDispatch } from 'react-redux'
+import { Container, Row, Col, Toast } from 'react-bootstrap'
 import Breadcrumb from '../components/Breadcrumb'
-import logo from './../images/merey_logo.svg'
 import styled from 'styled-components'
+import ProductCard from '../components/ProductCard'
+import Loader from '../components/Loader'
 
-const ProductCard = styled.div`
-  text-align: center;
-
-  a {
-    color: initial;
-    &:hover {
-      text-decoration: none;
-    }
-  }  
-  
-  .product-img {
-    height: 15em;
-    text-align: center;
-    background-image: url(${props => props.url ? props.url : ''});
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  
-  .product-details {
-    padding: 1em;
-  }
-  .product-name:hover {
-    text-decoration: none;
-  }
-
-  .product-name {
-    font-size:  small;
-  }
-  
-  button {
-    text-align: center;
-    font-weight: 700;
-  }
+const ToastWrapper = styled.div`
+  position: fixed;
+  top: 2em;
+  right: 2em;
+  z-index: 1;
 `
 
 export default ({ match }) => {
-  const dispatch = useDispatch()
-  const [show, setShow] = useState(false);
+  const [toast, setToast] = useState([]);
 
   const { deparment } = match.params
 
   const { loading, error, data } = useQuery(PRODUCTS_BY_DEPARTMENT, { variables: { deparment } })
 
-  if (loading) return <div>LOADING...</div>
+  if (loading) return <Loader/>
   if (error) return <div>ERROR</div>
+
+  const renderToast = (toast) => {
+    return (
+      <ToastWrapper>
+        {
+          toast.map(({nombre_de_productos}, i) =>
+              <Toast
+                key={i}
+                onClose={() => setToast([])} 
+                show={toast ? true : false} 
+                delay={3000}
+                autohide
+              >
+                <Toast.Header>
+                  <strong className="mr-auto">Merey</strong>
+                  <small>Hace 1 segundo</small>
+                </Toast.Header>
+                <Toast.Body>{`Woohoo, se agregó correctamente el producto ${nombre_de_productos}!`}</Toast.Body>
+              </Toast>  
+          )
+        }
+      </ToastWrapper>
+    )
+  }
 
   return (
     <React.Fragment>
       <Breadcrumb />
-      <Container fluid>    
+      <Container fluid>
+      {toast && renderToast(toast)}
         <Row>
           {
-            data.productos.map((product, i) =>
-              <Col key={i} xs={12} sm={4} md={3} lg={2} className="pb-4">
-                <ProductCard 
-                    url={
-                      product.url_fotos 
-                        ? `https://lh3.googleusercontent.com/${product.url_fotos}`
-                        : logo
-                    }
-                  >
-                  <Link to={`${match.url}/${product.codigo}`}>
-                    <div className="product-img" />
-                    <div className="product-details">
-                      <p className="product-name">{`${product.nombre_de_productos} ${product.formato}`}</p>
-                      <p>{`$ ${product.precio_de_venta}`}</p>
-                    </div>
-                  </Link>
-                    <Button
-                      variant="light"
-                      size="sm"
-                      onClick={() => {
-                        dispatch({type: 'ADD_PRODUCT', product})
-                        setShow(true)
-                      }}
-                    >
-                      Añadir al carrito
-                    </Button>
-                </ProductCard>
+            data.productos.map((product, key) =>
+              <Col key={key} xs={12} sm={4} md={3} lg={2} className="pb-4">
+                <ProductCard product={product} matchUrl={match.url}/>
               </Col>
             )
           }
         </Row>
-        
-        <Col xs={6}>
-          <Toast onClose={() => setShow(false)} show={show} delay={3000}>
-            <Toast.Header>
-              <img
-                src="holder.js/20x20?text=%20"
-                className="rounded mr-2"
-                alt=""
-              />
-              <strong className="mr-auto">Bootstrap</strong>
-              <small>11 mins ago</small>
-            </Toast.Header>
-            <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
-          </Toast>
-        </Col>
       </Container>
     </React.Fragment>
   )

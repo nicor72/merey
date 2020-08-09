@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // Import css files
 import './App.css'
+import "react-alice-carousel/lib/alice-carousel.css"
 // Views
 import Home from './views/Home'
 import Company from './views/Company'
@@ -11,6 +12,7 @@ import Contact from './views/Contact'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import ShoppingCart from './views/ShoppingCart'
+import Confirm from './views/Confirm'
 
 export default () =>
   <Router>
@@ -22,6 +24,7 @@ export default () =>
         <Route path="/estamos" component={Where} />
         <Route path="/contacto" component={Contact} />
         <Route path="/carrito" component={ShoppingCart} />
+        <Route path="/confirmar" component={Confirm} />
       </Switch>
     <Footer />
   </Router>

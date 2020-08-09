@@ -18,7 +18,7 @@ const Footer = styled.footer`
 
 export default () =>
   <Footer>
-    <Row className="bg-black">
+    <div className="bg-black">
       <Container>
         <Row>
           <Col>
@@ -64,5 +64,5 @@ export default () =>
           </Col>
         </Row>
       </Container>
-    </Row>
+    </div>
   </Footer>

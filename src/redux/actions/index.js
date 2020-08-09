@@ -1,7 +1,7 @@
-export const addProduct = (product) => {
+export const addProduct = (productCode) => {
   return {
     type: 'ADD_PRODUCT',
-    product
+    productCode
   }  
 }
 
@@ -12,16 +12,17 @@ export const removeProduct = (productCode) => {
   }  
 }
 
-export const addCrumb = (crumb) => {
+export const updateProduct = (productCode, quantity) => {
   return {
-    type: 'ADD_CRUMB',
-    crumb
+    type: 'UPDATE_PRODUCT',
+    productCode,
+    quantity
   }  
 }
 
-export const removeCrumb = (crumbCode) => {
+export const reduceProduct = (productCode) => {
   return {
-    type: 'REMOVE_CRUMB',
-    crumbCode
+    type: 'REDUCE_PRODUCT',
+    productCode
   }  
 }
