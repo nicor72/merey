@@ -56,9 +56,20 @@ export default ({product, matchUrl}) => {
   }, [cart])
 
   const handleChange = (e) => {
-    const type = e.target.value > 0 ? 'UPDATE_PRODUCT' : 'REMOVE_PRODUCT'
-    dispatch({type, productCode: product.codigo, quantity: e.target.value})
     setQuantity(e.target.value)
+    if (e.target.value >= 1 && e.target.value <= product.cantidad_disponible) {
+        dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: e.target.value})
+    }
+  }
+
+  const handleBlur = (e) => {
+    if (e.target.value < 1) {
+      dispatch({type: 'REMOVE_PRODUCT', productCode: product.codigo })
+    }
+    if (e.target.value >= product.cantidad_disponible) {
+      setQuantity(product.cantidad_disponible)
+      dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: product.cantidad_disponible })
+    }
   }
 
   return (
@@ -83,13 +94,14 @@ export default ({product, matchUrl}) => {
               Añadir al carrito
             </Button>
           : <Row className="justify-content-md-center">
-              <Col xs={12} sm={2} md={2} lg={4}>
+              <Col xs={{ span: 2, offset: 5}} md={{span: 4, offset: 0}} lg={{span: 5, offset: 0}}>
                 <Form.Control 
                   type="number" 
                   min="0" 
-                  max="100" 
+                  max={product.cantidad_disponible} 
                   value={quantity}
                   onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleBlur(e)}
                 />
               </Col>
             </Row>

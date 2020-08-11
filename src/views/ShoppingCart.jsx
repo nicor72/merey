@@ -14,24 +14,23 @@ export default () => {
     acc = [...acc, product.codigo]
   , [])
 
-  const { loading, error, data } = useQuery(PRODUCT_BY_ID, { variables: { productId } })
+  const queryProducts = useQuery(PRODUCT_BY_ID, { variables: { productId } })
 
-  // if (loading) return <div>LOADING...</div>
-  // if (error) return <div>ERROR</div>
-  if (data) {
+  if (queryProducts.data) {
     cart.map((product) => {
-      product.precio_de_venta = data.productos.find(
-        ({codigo}) => codigo === product.codigo
-      ).precio_de_venta
-      product.nombre_de_productos = data.productos.find(
-        ({codigo}) => codigo === product.codigo
-      ).nombre_de_productos
+      const {
+        precio_de_venta,
+        nombre_de_productos,
+        cantidad_disponible
+      } = queryProducts.data.productos.find(({codigo}) => codigo === product.codigo)
+
+      product.precio_de_venta = precio_de_venta
+      product.nombre_de_productos = nombre_de_productos
+      product.cantidad_disponible = cantidad_disponible
+      
+      return true
     })
   }
-
-  // data.productos.map((product) => {
-  //   return product.cantidad = cart.find(({codigo}) => codigo === product.codigo).cantidad
-  // })
 
   const Number = new Intl.NumberFormat("de-DE")
 

@@ -4,17 +4,17 @@ import { Form } from 'react-bootstrap'
 
 export default ({ product }) => {
   const dispatch = useDispatch()
-  const [quantity, setQuantity] = useState(0)
+  const [quantity, setQuantity] = useState(product.cantidad)
 
   const Number = new Intl.NumberFormat("de-DE")
 
   useEffect(() => {
-    setQuantity(product.cantidad || 0)
-  }, [])
+    setQuantity(product.cantidad)
+  }, [product])
 
   const handleChange = (e) => {
     setQuantity(e.target.value)
-    if (e.target.value >= 1 && e.target.value < 101) {
+    if (e.target.value >= 1 && e.target.value <= product.cantidad_disponible) {
       dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: e.target.value})
     }
   }
@@ -24,9 +24,9 @@ export default ({ product }) => {
       setQuantity(1)
       dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: 1 })
     }
-    if (e.target.value > 101) {
-      setQuantity(100)
-      dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: 100 })
+    if (e.target.value >= product.cantidad_disponible) {
+      setQuantity(product.cantidad_disponible)
+      dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: product.cantidad_disponible })
     }
   }
 
@@ -39,7 +39,7 @@ export default ({ product }) => {
         <Form.Control 
           type="number" 
           min="0" 
-          max="100" 
+          max={product.cantidad_disponible} 
           value={quantity}
           onChange={(e) => handleChange(e)}
           onBlur={(e) => handleBlur(e)}
