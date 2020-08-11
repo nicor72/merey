@@ -25,7 +25,7 @@ export default () => {
         items: 1,
     },
     1024: {
-        items: 4
+        items: 12
     }
   }
   

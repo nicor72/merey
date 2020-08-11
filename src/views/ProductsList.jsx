@@ -51,12 +51,12 @@ export default ({ match }) => {
   return (
     <React.Fragment>
       <Breadcrumb />
-      <Container fluid>
+      <Container fluid="lg">
       {toast && renderToast(toast)}
         <Row>
           {
             data.productos.map((product, key) =>
-              <Col key={key} xs={12} sm={4} md={3} lg={2} className="pb-4">
+              <Col key={key} xs={12} md={6} lg={3} className="pb-4">
                 <ProductCard product={product} matchUrl={match.url}/>
               </Col>
             )

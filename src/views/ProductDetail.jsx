@@ -38,11 +38,23 @@ export default ({ match }) => {
   const productPhotos = product.url_fotos ? product.url_fotos.split(',') : []
 
   const handleChange = (e) => {
-    const type = e.target.value > 0 ? 'UPDATE_PRODUCT' : 'REMOVE_PRODUCT'
-    dispatch({type, productCode: product.codigo, quantity: e.target.value})
-    
     setQuantity(e.target.value)
+    if (e.target.value >= 1 && e.target.value <= product.cantidad_disponible) {
+        dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: e.target.value})
+    }
   }
+
+  const handleBlur = (e) => {
+    if (e.target.value < 1) {
+      dispatch({type: 'REMOVE_PRODUCT', productCode: product.codigo })
+    }
+    if (e.target.value >= product.cantidad_disponible) {
+      setQuantity(product.cantidad_disponible)
+      dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: product.cantidad_disponible })
+    }
+  }
+
+  console.log(product)
 
   const carouselItems = productPhotos.map((url) =>
     <img 
@@ -55,22 +67,22 @@ export default ({ match }) => {
   return (
     <React.Fragment>
       <Breadcrumb />
-      <Container fluid="md">
+      <Container fluid="lg">
         <Row>
-          <Col className="pb-4" xs={12} sm={4}>
+          <Col className="pb-4" xs={12} lg={4}>
             {
               productPhotos.length
               ? <Carousel items={carouselItems} thumbs={true}/>
               : <Image fluid src={logo} />
             }
-            
           </Col>
           
           <Col>
             <DetailsStyle>
               <h3 className="p-5">{product.nombre_de_productos}</h3>
               <p><strong>Presentación: </strong>{product.formato}</p>
-              <p><strong>Precio:</strong> $ {Number.format(product.precio_de_venta)}</p>          
+              <p><strong>Precio: </strong>$ {Number.format(product.precio_de_venta)}</p>       
+              <p><strong>Disponibles: </strong>{product.cantidad_disponible}</p>       
               {
                 quantity === 0
                 ? <Button
@@ -88,10 +100,11 @@ export default ({ match }) => {
                       <Col xs="auto"> 
                         <Form.Control 
                           type="number" 
-                          min="0" 
-                          max="100" 
+                          min="0"
+                          max={product.cantidad_disponible} 
                           value={quantity}
                           onChange={(e) => handleChange(e)}
+                          onBlur={(e) => handleBlur(e)}
                         />
                       </Col>
                     </Form.Row>
