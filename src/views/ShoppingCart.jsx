@@ -1,14 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Container, Table } from 'react-bootstrap'
-import { useHistory } from "react-router-dom"
 import { useQuery } from '@apollo/react-hooks'
 import { PRODUCT_BY_ID } from '../graphql/queries/productos'
 import ProductRow from '../components/ProductRow'
 
 export default () => {
-  let history = useHistory()
-
   const { cart } = useSelector((state) => state)
   const productId = cart.reduce((acc, product) =>
     acc = [...acc, product.codigo]
