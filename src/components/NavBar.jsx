@@ -1,14 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { Badge } from 'react-bootstrap'
-import ReactSVG from 'react-svg'
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
+// import ReactSVG from 'react-svg'
+import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap'
 import styled from 'styled-components'
 
 import Logo from './Logo'
-import instagram from './../images/logo-de-instagram.svg'
-import facebook from './../images/facebook-logo.svg'
+// import instagram from './../images/logo-de-instagram.svg'
+// import facebook from './../images/facebook-logo.svg'
 
 const NavStyle = styled.div`
   nav {

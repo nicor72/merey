@@ -1,34 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Form } from 'react-bootstrap'
+import InputNumber from '../components/InputNumber'
 
 export default ({ product }) => {
   const dispatch = useDispatch()
-  const [quantity, setQuantity] = useState(product.cantidad)
-
   const Number = new Intl.NumberFormat("de-DE")
-
-  useEffect(() => {
-    setQuantity(product.cantidad)
-  }, [product])
-
-  const handleChange = (e) => {
-    setQuantity(e.target.value)
-    if (e.target.value >= 1 && e.target.value <= product.cantidad_disponible) {
-      dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: e.target.value})
-    }
-  }
-
-  const handleBlur = (e) => {
-    if (e.target.value < 1) {
-      setQuantity(1)
-      dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: 1 })
-    }
-    if (e.target.value >= product.cantidad_disponible) {
-      setQuantity(product.cantidad_disponible)
-      dispatch({type: 'UPDATE_PRODUCT', productCode: product.codigo, quantity: product.cantidad_disponible })
-    }
-  }
 
   return (
     <tr>
@@ -36,13 +12,11 @@ export default ({ product }) => {
       <td>{product.nombre_de_productos}</td>
       <td>$ {Number.format(product.precio_de_venta)}</td>
       <td>
-        <Form.Control 
-          type="number" 
-          min="0" 
-          max={product.cantidad_disponible} 
-          value={quantity}
-          onChange={(e) => handleChange(e)}
-          onBlur={(e) => handleBlur(e)}
+        <InputNumber
+          productCode={product.codigo}
+          availables={product.cantidad_disponible}
+          spans={{xs: {span: 12, offset: 0}}}
+          removeProduct={false}
         />
       </td>
       <td>$ {Number.format(product.precio_de_venta * product.cantidad)}</td>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import AliceCarousel from 'react-alice-carousel'
-import { Row, Col, Image } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
