@@ -6,8 +6,6 @@ import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap'
 import styled from 'styled-components'
 
 import Logo from './Logo'
-// import instagram from './../images/logo-de-instagram.svg'
-// import facebook from './../images/facebook-logo.svg'
 
 const NavStyle = styled.div`
   nav {
@@ -49,8 +47,8 @@ export default () => {
             </NavDropdown> */}
           </Nav>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
+            <FormControl type="text" placeholder="¿Qué estas buscando?" className="mr-sm-2" />
+            <Button variant="outline-success">Buscar</Button>
           </Form>
         </Navbar.Collapse>
       </Navbar>
@@ -126,20 +124,7 @@ export default () => {
     //           </Link>
     //         </li>
     //       </ul>
-    //       <a
-    //         href="https://www.instagram.com/merey.tostaduria/"
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //       >
-    //         <ReactSVG src={instagram} />
-    //       </a>
-    //       <a 
-    //         href="https://www.facebook.com/merey.tostaduria"
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //       >
-    //         <ReactSVG src={facebook} />
-    //       </a>
+    //       
     //     </div>
     //   </nav>
     // </div>

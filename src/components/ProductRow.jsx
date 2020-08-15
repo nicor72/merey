@@ -5,12 +5,18 @@ import InputNumber from '../components/InputNumber'
 export default ({ product }) => {
   const dispatch = useDispatch()
   const Number = new Intl.NumberFormat("de-DE")
-
+  const subtotal = product.precio_de_venta * product.cantidad
   return (
     <tr>
       <td>{product.codigo}</td>
       <td>{product.nombre_de_productos}</td>
-      <td>$ {Number.format(product.precio_de_venta)}</td>
+      <td>$ 
+        {
+          !isNaN(product.precio_de_venta)
+          ? Number.format(product.precio_de_venta)
+          : '-'
+        }
+      </td>
       <td>
         <InputNumber
           productCode={product.codigo}
@@ -19,7 +25,13 @@ export default ({ product }) => {
           removeProduct={false}
         />
       </td>
-      <td>$ {Number.format(product.precio_de_venta * product.cantidad)}</td>
+      <td>$ 
+        {
+          !isNaN(product.precio_de_venta) 
+          ? Number.format(subtotal)
+          : ''
+        }
+      </td>
       <td>
         <button 
           onClick={() => dispatch({type: 'REMOVE_PRODUCT', productCode: product.codigo})}

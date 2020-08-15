@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { Row } from 'react-bootstrap'
+import { Container, Row } from 'react-bootstrap'
 import Breadcrumb from '../components/Breadcrumb'
 import DeparmentCard from '../components/DeparmentCard'
 import DEPARTAMENTS from '../graphql/queries/departamentos'
@@ -14,13 +14,15 @@ export default () => {
   return (
     <Fragment>
       <Breadcrumb />
-      <Row className="justify-content-md-center">
-          {
-            data.departamentos.map((deparment, key) =>
-              <DeparmentCard key={key} {...deparment} />
-            )
-          }
-      </Row>
+      <Container fluid="lg">
+        <Row className="justify-content-md-center">
+            {
+              data.departamentos.map((deparment, key) =>
+                <DeparmentCard key={key} {...deparment} />
+              )
+            }
+        </Row>
+      </Container>
     </Fragment>
   )
 }
