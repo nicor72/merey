@@ -8,6 +8,9 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "graphql": "^15.2.0",
+    "logrocket": "^1.0.11",
+    "logrocket-react": "^4.0.1",
+    "nuka-carousel": "^4.4.4",
     "react": "^16.13.1",
     "react-alice-carousel": "^1.19.3",
     "react-bootstrap": "^1.0.1",
@@ -21,6 +24,7 @@
     "react-visibility-sensor": "^5.1.1",
     "redux": "^4.0.5",
     "redux-devtools": "^3.5.0",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.1.1"
   },
