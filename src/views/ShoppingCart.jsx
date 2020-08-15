@@ -41,9 +41,9 @@ export default () => {
               <tr>
                 <th>Código</th>
                 <th>Nombre del producto</th>
-                <th>Precio Unidad</th>
+                <th>Precio unidad</th>
                 <th>Cantidad</th>
-                <th>Total</th>
+                <th>Sub total</th>
               </tr>
             </thead>
             <tbody>
