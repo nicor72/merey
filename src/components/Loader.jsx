@@ -1,8 +1,14 @@
 import React from 'react'
 import { Spinner } from 'react-bootstrap'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  display: grid;
+  place-items: center;
+`
 
 export default () =>
-  <React.Fragment>
+  <Wrapper className="parent">
     <Spinner animation="grow" variant="primary" />
     <Spinner animation="grow" variant="secondary" />
     <Spinner animation="grow" variant="success" />
@@ -11,4 +17,4 @@ export default () =>
     <Spinner animation="grow" variant="info" />
     <Spinner animation="grow" variant="light" />
     <Spinner animation="grow" variant="dark" />
-  </React.Fragment>
+  </Wrapper>
