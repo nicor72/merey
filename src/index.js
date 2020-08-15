@@ -8,6 +8,11 @@ import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import LogRocket from 'logrocket'
+import setupLogRocketReact from 'logrocket-react'
+
+LogRocket.init('iifo5r/merey')
+setupLogRocketReact(LogRocket)
 
 ReactDOM.render(
   <Provider store={store}>
