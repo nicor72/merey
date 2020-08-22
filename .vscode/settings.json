@@ -1,0 +1,28 @@
+{
+  "files.autoSave": "onFocusChange",
+//   "workbench.colorTheme": "Atom One Dark",
+  "editor.wordWrap": "on",
+  "editor.lineHeight": 20,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "explorer.confirmDragAndDrop": false,
+  "emmet.syntaxProfiles": {
+    "javascript": "jsx"
+  },
+  "files.associations": {
+    "*.js": "javascript"
+  },
+  "editor.scrollBeyondLastLine": true,
+  "editor.formatOnPaste": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.snippetSuggestions": "top",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "none",
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
