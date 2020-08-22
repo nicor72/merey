@@ -24,9 +24,11 @@ export default ({setShowNav}) => {
   let history = useHistory()
   const [getProducts, {loading, data}] = useLazyQuery(SEARCH_PRODUCTS)
 
-  const handleClick = (option) => {
-    setShowNav(false)
-    history.push(`/productos/${option.departamentoProducto.nombre}/${option.codigo}`)
+  const handleClick = (selected) => {
+    if (selected) {
+      setShowNav(false)
+      history.push(`/productos/${selected.departamentoProducto.nombre}/${selected.codigo}`)
+    }
   }
 
   return (
