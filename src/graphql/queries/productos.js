@@ -42,3 +42,14 @@ export const HIGHTLIGHTS_PRODUCTS = gql`
       }
     }
   }`
+
+export const SEARCH_PRODUCTS = gql`
+query product($name: String) {
+  productos(where: {nombre_de_productos: {_ilike: $name}}) {
+    codigo
+    nombre_de_productos
+    departamentoProducto {
+      nombre
+    }
+  }
+}`

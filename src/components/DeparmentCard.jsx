@@ -25,7 +25,7 @@ export default ({ id, nombre }) => {
       <DeparmentCard>
         <Button 
             variant="light"
-            onClick={() => {history.push(`productos/${nombre}`)}}
+            onClick={() => history.push(`productos/${nombre}`)}
         >
             {nombre}
         </Button>
