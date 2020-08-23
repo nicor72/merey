@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Container, Table } from 'react-bootstrap'
+import { Container, Table, Modal, Button } from 'react-bootstrap'
 import { useQuery } from '@apollo/react-hooks'
 import { PRODUCT_BY_ID } from '../graphql/queries/productos'
 import ProductRow from '../components/ProductRow'
 
-export default () => {
+export default ({ modalShow, setModalShow }) => {
   const { cart } = useSelector((state) => state)
   const productId = cart.reduce((acc, product) =>
     acc = [...acc, product.codigo]
@@ -33,8 +33,31 @@ export default () => {
 
   return (
     <Container>
-      <div>SHOPPING CART</div>
-        {
+      <Modal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        // size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        dialogClassName="modal-90w"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Carrito de compras
+        </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Productos</h4>
+          <p>
+            Prronto tus compras aqui...
+        </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setModalShow(false)}>Cerrar</Button>
+        </Modal.Footer>
+      </Modal>
+      {/* <div>SHOPPING CART</div> */}
+        {/* {
           cart.length > 0 &&
           <Table striped bordered hover responsive>
             <thead>
@@ -80,7 +103,7 @@ export default () => {
               </tr>
             </tbody>
           </Table>
-        }
+        } */}
     </Container>
   )
 }
