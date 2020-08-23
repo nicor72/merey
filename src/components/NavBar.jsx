@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Badge } from 'react-bootstrap'
 import { Navbar, Nav } from 'react-bootstrap'
+import { RiShoppingCartFill, RiChatSmile3Fill, RiRoadMapFill, RiHomeHeartLine, RiStore2Line } from 'react-icons/ri'
 import SideNav, { MenuIcon } from 'react-simple-sidenav'
 import styled from 'styled-components'
 import Logo from './Logo'
 import Search from './Search'
+import ShoppingCart from '../views/ShoppingCart'
 
 const NavStyle = styled.div`
   background-color: black !important;
-  padding: 2rem;
 
   .navbar {
     background-color: black !important;
@@ -25,6 +26,23 @@ const NavStyle = styled.div`
     a {
       color: black;
     }
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    outline:none;
+    color: white;
+    &:hover {
+      border: none;
+    }
+    svg {
+      display: initial;
+    }
+  }
+  .clearfix {
+    width: 100%;
+    height: 10rem;
   }
   
   .badge {
@@ -43,33 +61,47 @@ export default () => {
   const [showNav, setShowNav] = useState()
   const { cart } = useSelector((state) => state)
 
-  window.onscroll = () => {
-    const sticky = ref.current.offsetTop;
-    if (window.pageYOffset > sticky) {
-      ref.current.classList.add('fixed-top')
-    } else {
-      ref.current.classList.remove('fixed-top')
-    }
-  }
+  // window.onscroll = () => {
+  //   const sticky = ref.current.offsetTop;
+  //   if (window.pageYOffset > sticky) {
+  //     ref.current.classList.add('fixed-top')
+  //   } else {
+  //     ref.current.classList.remove('fixed-top')
+  //   }
+  // }
 
   const navItems = [
     <Search setShowNav={setShowNav}/>,
-    <Link to="/empresa" className="nav-link" onClick={() => setShowNav(false)}>Empresa</Link>,
-    <Link to="/productos" className="nav-link" onClick={() => setShowNav(false)}>Productos</Link>,
-    <Link to="/estamos" className="nav-link" onClick={() => setShowNav(false)}>Estamos</Link>,
-    <Link to="/contacto" className="nav-link" onClick={() => setShowNav(false)}>Contacto</Link>,
-    <Link to="/carrito" className="nav-link" onClick={() => setShowNav(false)}>
-      Carrito
-      {
-        cart.length > 0 &&
-        <Badge variant="light">{cart.length}</Badge>
-      }
+    <Link to="/empresa" className="nav-link" onClick={() => setShowNav(false)}>
+      <RiHomeHeartLine size={32} className="pr-2" />
+      Empresa
+    </Link>,
+    <Link to="/productos" className="nav-link" onClick={() => setShowNav(false)}>
+      <RiStore2Line size={32} className="pr-2" />
+      Productos
+    </Link>,
+    <Link to="/estamos" className="nav-link" onClick={() => setShowNav(false)}>
+      <RiRoadMapFill size={32} className="pr-2" />
+      Estamos
+    </Link>,
+    <Link to="/contacto" className="nav-link" onClick={() => setShowNav(false)}>
+      <RiChatSmile3Fill size={32} className="pr-2"/>
+      Contacto
     </Link>
+    // <Link to="/carrito" className="nav-link" onClick={() => setShowNav(false)}>
+    //   Carrito
+    //   {
+    //     cart.length > 0 &&
+    //     <Badge variant="light">{cart.length}</Badge>
+    //   }
+    // </Link>
   ];
+
+  const [modalShow, setModalShow] = React.useState(false);
 
   return (
     <NavStyle>
-      <Navbar ref={ref} variant="dark" expand="lg">
+      <Navbar ref={ref} variant="dark" expand="lg" fixed="top">
         <Link to="/" className="navbar-brand">
           <Logo />
         </Link>
@@ -79,16 +111,25 @@ export default () => {
             <Link to="/productos" className="nav-link">Productos</Link>
             <Link to="/estamos" className="nav-link">Estamos</Link>
             <Link to="/contacto" className="nav-link">Contacto</Link>
-            <Link to="/carrito" className="nav-link">
+            {/* <button onClick={() => setModalShow(true)} className="nav-link">
               Carrito
               {
                 cart.length > 0 &&
                 <Badge variant="light">{cart.length}</Badge>
               }
-            </Link>
+            </button> */}
+            
           </Nav>
           <Search setShowNav={setShowNav}/>
         </Navbar.Collapse>
+        <button onClick={() => setModalShow(true)} className="nav-link">
+          <RiShoppingCartFill size={32}/>
+              {
+            cart.length > 0 &&
+            <Badge variant="light">{cart.length}</Badge>
+          }
+        </button>
+
         <MenuIcon onClick={() => setShowNav(true)}/>
         <SideNav 
           openFromRight={true}
@@ -99,6 +140,9 @@ export default () => {
           items={navItems}
         />
       </Navbar>
+
+      <div className="clearfix"></div>
+      <ShoppingCart modalShow={modalShow} setModalShow={setModalShow} />
       {/* <Navbar ref={ref} bg="dark" variant="dark" expand="lg">
         <Link to="/" className="navbar-brand">
           <Logo/>
