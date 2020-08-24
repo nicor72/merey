@@ -142,7 +142,7 @@ export default ({ productCode, availables, spans, removeProduct = true }) => {
                 <input 
                   type="button"
                   value="-" 
-                  class="button button-minus" 
+                  className="button button-minus" 
                   onClick={(e) => handleUpdate(e, 'decrement')}
                 />
                 <Form.Control 
@@ -159,7 +159,7 @@ export default ({ productCode, availables, spans, removeProduct = true }) => {
                 <input
                   type="button"
                   value="+"
-                  class="button button-minus"
+                  className="button button-minus"
                   onClick={(e) => handleUpdate(e, 'increment')}
                 />
               </div>
