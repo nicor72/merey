@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   button {
     border: none;
     padding: 0;
+    color: black !important;
   }
 
   .active {

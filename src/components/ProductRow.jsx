@@ -41,7 +41,7 @@ export default ({ product }) => {
               <button
                 onClick={() => dispatch({ type: 'REMOVE_PRODUCT', productCode: product.codigo })}
               >
-                <RiDeleteBin6Line size={32}/>
+                <RiDeleteBin6Line size={24}/>
               </button>
             </Col>
           </Row>
@@ -79,7 +79,7 @@ export default ({ product }) => {
             <Col>$
               {
                 !isNaN(product.precio_de_venta)
-                  ? Number.format(product.precio_de_venta * product.cantidad)
+                  ? Number.format(subtotal)
                   : ''
               }
             </Col>
