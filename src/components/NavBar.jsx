@@ -49,6 +49,10 @@ const NavStyle = styled.div`
     margin-left: .5rem;
   }
 
+  ul {
+    padding: 1rem;
+  }
+
   @media (min-width: 992px) {
     svg {
       display: none;
