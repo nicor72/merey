@@ -5,8 +5,6 @@ import ProductsList from './ProductsList'
 import ProductDetail from './ProductDetail'
 import Deparments from './Departments'
 
-// import nuts from './../images/circle-nuts.png'
-
 export default ({ match }) =>
   <Container fluid>
     <Route

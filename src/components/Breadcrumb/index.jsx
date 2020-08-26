@@ -1,21 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Breadcrumb } from 'react-bootstrap'
-import { useParams } from "react-router-dom"
-
-const BreadcrumbWrapper = styled.div`
-  ol {
-    background-color: transparent;
-  }  
-  a {
-    color: black;
-  }
-`
+import { useParams } from 'react-router-dom'
+import Wrapper from './Style'
 
 export default () => {
-  let { deparment, productId } = useParams();
+  let { deparment, productId } = useParams()
   return (
-    <BreadcrumbWrapper>
+    <Wrapper>
       <Breadcrumb>
         <Breadcrumb.Item href="/">INICIO</Breadcrumb.Item>
         <Breadcrumb.Item href="/productos">
@@ -30,16 +21,7 @@ export default () => {
               {deparment}
             </Breadcrumb.Item>
         }
-        {/* {
-          product &&
-            <Breadcrumb.Item 
-              href={`/productos/${deparment}/${product}`}
-              active
-            >
-              {product}
-            </Breadcrumb.Item>
-        } */}
       </Breadcrumb>
-    </BreadcrumbWrapper>
+    </Wrapper>
   )
 }

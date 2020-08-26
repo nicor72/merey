@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom"
 import { AsyncTypeahead, ClearButton } from 'react-bootstrap-typeahead'
 import { ListGroup } from 'react-bootstrap'
 import { useLazyQuery } from '@apollo/react-hooks'
-import { SEARCH_PRODUCTS } from '../graphql/queries/productos'
+import { SEARCH_PRODUCTS } from '../../graphql/queries/productos'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
