@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../components/Form'
+import ContactForm from '../components/ContactForm'
 
 export default () =>
   <div>
@@ -7,6 +7,6 @@ export default () =>
       <h1 className="sub-main-title">
           CONTACTO
       </h1>
-      <Form />
+      <ContactForm />
     </div>    
   </div>

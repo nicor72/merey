@@ -1,10 +1,10 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import { useQuery } from '@apollo/react-hooks'
-import { HIGHTLIGHTS_PRODUCTS } from '../graphql/queries/productos'
-import Carousel from '../components/Carousel'
-import ProductCard from '../components/ProductCard'
-import Loader from '../components/Loader'
+import { HIGHTLIGHTS_PRODUCTS } from '../../graphql/queries/productos'
+import Carousel from '../Carousel'
+import ProductCard from '../ProductCard'
+import Loader from '../Loader'
 
 export default () => {
   const { loading, error, data } = useQuery(HIGHTLIGHTS_PRODUCTS)

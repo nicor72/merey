@@ -25,7 +25,7 @@ export default ({ match }) => {
   return (
     <React.Fragment>
       <Wrapper>
-        <Carousel items={bannerItems}/>
+        <Carousel items={bannerItems} arrows={false} />
       </Wrapper>
       <Highlights/>
     </React.Fragment>

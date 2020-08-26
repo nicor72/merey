@@ -4,11 +4,12 @@ import { Container, Row } from 'react-bootstrap'
 import Breadcrumb from '../components/Breadcrumb'
 import DeparmentCard from '../components/DeparmentCard'
 import DEPARTAMENTS from '../graphql/queries/departamentos'
+import Loader from '../components/Loader'
 
 export default () => {
   const { loading, error, data } = useQuery(DEPARTAMENTS)
 
-  if (loading) return <div>LOADING...</div>
+  if (loading) return <Loader/>
   if (error) return <div>ERROR</div>
 
   return (

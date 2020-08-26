@@ -1,44 +1,10 @@
 import React, { useState } from 'react'
 import AliceCarousel from 'react-alice-carousel'
 import { Row, Col } from 'react-bootstrap'
-import styled from 'styled-components'
+import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
+import Wrapper from './Style'
 
-const Wrapper = styled.div`
-  .sliderimg {
-    width: 100%;
-    height: 500px;
-    object-fit: contain
-  }
-  .carousel-btn, .thumb-btn {
-    background: none;
-    border: none;
-    .sliderimg {
-      width: 5em;
-      height: 5em;
-    }
-  }
-  .carousel-btn {
-    position: relative;
-    bottom: 20em;
-    &.next {
-      float: right;
-    }
-  }
-`
-
-export default ({ items, responsive, thumbs = false }) => {
-  
-  // useEffect(() => {
-  //   if (!items.lenght) {
-  //     items = urls.map((url) =>
-  //       <img 
-  //         src={url}
-  //         className="sliderimg" 
-  //         alt="banner merey"
-  //       />
-  //     )
-  //   }
-  // }, [])
+export default ({ items, responsive, thumbs = false, arrows = true}) => {
 
   const [state, setState] = useState({ currentIndex: 0 })
 
@@ -69,8 +35,17 @@ export default ({ items, responsive, thumbs = false }) => {
             )
         }
       </Row>
-      <button className="carousel-btn" onClick={slidePrev}>prev</button>
-      <button className="carousel-btn next" onClick={slideNext}>next</button>
+      {
+        arrows &&
+        <React.Fragment>
+          <button className="carousel-btn" onClick={slidePrev}>
+            <RiArrowLeftSLine/>
+          </button>
+          <button className="carousel-btn next" onClick={slideNext}>
+            <RiArrowRightSLine />
+          </button>
+        </React.Fragment>
+      }
     </Wrapper>
   )
 }

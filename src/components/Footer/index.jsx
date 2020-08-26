@@ -1,29 +1,11 @@
 import React from 'react'
 import { Container, Row, Col, ListGroup } from 'react-bootstrap'
-import styled from 'styled-components'
-import instagram from './../images/logo-de-instagram.svg'
-import facebook from './../images/facebook-logo.svg'
-
-const Footer = styled.footer`
-  flex-shrink: 0;
-  .container {
-    padding: 5em;
-  }
-  .list-group {
-    margin-bottom: 2em;
-  }  
-  .list-group-item {
-    padding: 0 !important;
-    background-color: inherit;
-    color: inherit;
-  }
-  p {
-    text-decoration: none;
-  }
-`
+import instagram from '../../images/logo-de-instagram.svg'
+import facebook from '../../images/facebook-logo.svg'
+import Wrapper from './Style'
 
 export default () =>
-  <Footer>
+  <Wrapper>
     <div className="bg-black">
       <Container>
         <Row>
@@ -73,4 +55,4 @@ export default () =>
         </Row>
       </Container>
     </div>
-  </Footer>
+  </Wrapper>
