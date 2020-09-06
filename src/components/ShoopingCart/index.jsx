@@ -19,17 +19,21 @@ export default ({ modalShow, setModalShow }) => {
         precio_de_venta,
         nombre_de_productos,
         cantidad_disponible,
-        formato
+        formato,
+        url_fotos
       } = queryProducts.data.productos.find(({codigo}) => codigo === product.codigo)
 
       product.precio_de_venta = precio_de_venta
       product.nombre_de_productos = nombre_de_productos
       product.cantidad_disponible = cantidad_disponible
       product.formato = formato
+      product.url_fotos = url_fotos
       
       return true
     })
   }
+
+  const Number = new Intl.NumberFormat("de-DE")
 
   return (
     <Container fluid="lg">
@@ -48,15 +52,33 @@ export default ({ modalShow, setModalShow }) => {
         <Modal.Body>
           <h4>Productos</h4>
           {
-            cart.length > 0 &&
-              cart.map((product, key) =>
+            cart.length > 0 
+            ? cart.map((product, key) =>
                 <ProductRow key={key} product={product} />
-              ) 
+              )
+            : <React.Fragment>
+                <p>¿Aún no encuentras lo que buscas?</p>
+                <Button variant="success" onClick={() => setModalShow(false)}>
+                  Seguir Comprando
+                </Button>
+              </React.Fragment>
           }
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => setModalShow(false)}>Cerrar</Button>
-        </Modal.Footer>
+          {
+            cart.length > 0 &&
+            <Modal.Footer>
+              <span>
+                $ {
+                  Number.format(
+                    cart.reduce((acc, { cantidad, precio_de_venta }) =>
+                      acc = acc + (cantidad * precio_de_venta)
+                    , 0)
+                  )
+                }
+              </span>
+              <Button>Comprar</Button>
+            </Modal.Footer>
+          }
       </Modal>
     </Container>
   )
