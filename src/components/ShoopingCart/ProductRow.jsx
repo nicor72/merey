@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Container, Row, Col, Card, Image } from 'react-bootstrap'
-import InputNumber from '../InputNumber'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import Wrapper from './Style'
 
@@ -10,20 +9,20 @@ export default ({ product }) => {
   const Number = new Intl.NumberFormat("de-DE")
   const subtotal = product.precio_de_venta * product.cantidad
   
-  const spans = {
-    xs: {
-      span: 12,
-      offset: 0
-    },
-    md: {
-      span: 6,
-      offset: 3
-    },
-    lg: {
-      span: 6,
-      offset: 3
-    }
-  }
+  // const spans = {
+  //   xs: {
+  //     span: 12,
+  //     offset: 0
+  //   },
+  //   md: {
+  //     span: 6,
+  //     offset: 3
+  //   },
+  //   lg: {
+  //     span: 6,
+  //     offset: 3
+  //   }
+  // }
 
   return (
     <Wrapper>
