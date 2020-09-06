@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Container, Row, Col, Card } from 'react-bootstrap'
+import { Container, Row, Col, Card, Image } from 'react-bootstrap'
 import InputNumber from '../InputNumber'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import Wrapper from './Style'
@@ -31,6 +31,37 @@ export default ({ product }) => {
         <Card>
           <Card.Body>
             <Row>
+              <Col>
+                <Image src={product.url_fotos.split(',')[0]} thumbnail />
+              </Col>
+              <Col>
+                <p><span>{product.nombre_de_productos}</span></p>
+                <p><em>{product.formato}</em></p>
+              </Col>
+              <Col>
+                <p>
+                  <em>{product.cantidad}x{product.precio_de_venta}</em>
+                </p>
+                <p>
+                  Subtotal:
+                  <strong>
+                    ${
+                      !isNaN(subtotal)
+                        ? Number.format(subtotal)
+                        : ''
+                    }
+                  </strong>
+                </p>
+              </Col>
+              <Col>
+                <button
+                  onClick={() => dispatch({ type: 'REMOVE_PRODUCT', productCode: product.codigo })}
+                >
+                  <RiDeleteBin6Line size={24} />
+                </button>
+              </Col>
+            </Row>
+            {/* <Row>
               <Col xs={6}>
                 <p><span>{product.nombre_de_productos}</span></p>
               </Col>
@@ -44,8 +75,8 @@ export default ({ product }) => {
                   <RiDeleteBin6Line size={24}/>
                 </button>
               </Col>
-            </Row>
-            <Row>
+            </Row> */}
+            {/* <Row>
               <Col>
                 <p>Precio unidad:</p>
               </Col>
@@ -83,7 +114,7 @@ export default ({ product }) => {
                     : ''
                 }
               </Col>
-            </Row>
+            </Row> */}
           </Card.Body>
         </Card>
       </Container>

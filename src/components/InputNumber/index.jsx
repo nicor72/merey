@@ -121,7 +121,13 @@ export default ({ productCode, availables, spans, removeProduct = true }) => {
               />
               <p><em>Disponibles {availables} unidades</em></p>
             </div>
-        : <p>Agotado</p>
+        : <Button
+            variant="light"
+            size="lg"
+            disabled
+          >
+            Agotado
+          </Button>
       }
       </Col>
     </Wrapper>
