@@ -1,27 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import axios from 'axios';
+import React, { useRef, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { setWebpay } from '../redux/actions/webpay'
 
 export default () => {
-  const { cart } = useSelector((state) => state)
-  
-  const [response, setResponse] = useState({})
-
-  useEffect(() => {
-    axios.post('http://localhost:5000/webpay/init', { cart })
-    .then(res => {
-      setResponse(res.data)
-      ref.current.submit()
-    })
-  }, [])
-
   const ref = useRef(null)
+  const dispatch = useDispatch()
+  const { cart, webpay } = useSelector((state) => state)
+  
+  useEffect(() => {
+    const response = dispatch(setWebpay(cart))
+    if (response.success) ref.current.submit()
+  }, [])
 
   return (
     <React.Fragment>
       <h2>CONFIRM</h2>
-      <form ref={ref} id="webpay-form" action={response.url} method="post">
-        <input type="hidden" name={response.inputName} value={response.token} />
+      <form ref={ref} id="webpay-form" action={webpay.url} method="post">
+        <input type="hidden" name={webpay.inputName} value={webpay.token} />
       </form>
     </React.Fragment>
   )

@@ -13,26 +13,21 @@ export const cart = (state = initialState, action) => {
         cantidad: 1
       }
 
-      localStorage.setItem('state', JSON.stringify([...state, product]))
       return [...state, product]
 
-
     case 'UPDATE_PRODUCT':
-        const stateProduct = state.find(
-          product => product.codigo === action.productCode
-        )
+      const stateProduct = state.find(
+        product => product.codigo === action.productCode
+      )
 
-        stateProduct.cantidad = Number(action.quantity)
-        localStorage.setItem('state', JSON.stringify(state))
-  
-        return [...state]  
+      stateProduct.cantidad = Number(action.quantity)
+
+      return [...state]
 
     case 'REMOVE_PRODUCT':
       const newState = state.filter(
         product => product.codigo !== action.productCode
       )
-
-      localStorage.setItem('state', JSON.stringify(newState))
 
       return newState
 

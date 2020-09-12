@@ -2,12 +2,14 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Container, Row, Col, Card, Image } from 'react-bootstrap'
 import { RiDeleteBin6Line } from 'react-icons/ri'
+import logo from '../../images/merey_logo.svg'
 import Wrapper from './Style'
 
 export default ({ product }) => {
   const dispatch = useDispatch()
   const Number = new Intl.NumberFormat("de-DE")
   const subtotal = product.precio_de_venta * product.cantidad
+  const firstPhoto = product.url_fotos ? product.url_fotos.split(',')[0] : ''
   
   // const spans = {
   //   xs: {
@@ -31,7 +33,7 @@ export default ({ product }) => {
           <Card.Body>
             <Row>
               <Col>
-                <Image src={product.url_fotos.split(',')[0]} thumbnail />
+                <Image src={firstPhoto || logo } thumbnail />
               </Col>
               <Col>
                 <p><span>{product.nombre_de_productos}</span></p>
