@@ -51,9 +51,8 @@ export default () => {
           <Searcher setShowNav={setShowNav}/>
         </Navbar.Collapse>
         <button onClick={() => setModalShow(true)} className="nav-link">
-          <RiShoppingCartFill size={32}/>
-          {
-            cart.length > 0 &&
+          <RiShoppingCartFill size={24} />
+          {cart.length > 0 &&
             <Badge variant="light">{cart.length}</Badge>
           }
         </button>

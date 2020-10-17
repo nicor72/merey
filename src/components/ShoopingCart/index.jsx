@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Container, Modal, Button } from 'react-bootstrap'
 import { useQuery } from '@apollo/react-hooks'
@@ -38,11 +39,12 @@ export default ({ modalShow, setModalShow }) => {
   return (
     <Container fluid="lg">
       <Modal
+        size="md"
         show={modalShow}
         onHide={() => setModalShow(false)}
         aria-labelledby="contained-modal-title-vcenter"
-        dialogClassName="modal-90w"
-        centered
+        // dialogClassName="modal-90w"
+        // centered
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
@@ -50,33 +52,32 @@ export default ({ modalShow, setModalShow }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Productos</h4>
-          {
-            cart.length > 0 
+          {cart.length > 0 
             ? cart.map((product, key) =>
                 <ProductRow key={key} product={product} />
               )
-            : <React.Fragment>
+            : <div className="text-center">
                 <p>¿Aún no encuentras lo que buscas?</p>
-                <Button variant="success" onClick={() => setModalShow(false)}>
+                <Button variant="light" type="button" onClick={() => setModalShow(false)}>
                   Seguir Comprando
                 </Button>
-              </React.Fragment>
+              </div>
           }
         </Modal.Body>
-          {
-            cart.length > 0 &&
-            <Modal.Footer>
-              <span>
-                $ {
+          {cart.length > 0 &&
+            <Modal.Footer style={{ justifyContent: 'space-around' }}>
+              <strong>
+                Total ${
                   Number.format(
                     cart.reduce((acc, { cantidad, precio_de_venta }) =>
                       acc = acc + (cantidad * precio_de_venta)
                     , 0)
                   )
                 }
-              </span>
-              <Button>Comprar</Button>
+              </strong>
+              <Link to="/confirmar" onClick={() => setModalShow(false)}>
+                <Button variant="info" type="button">Comprar</Button>
+              </Link>
             </Modal.Footer>
           }
       </Modal>

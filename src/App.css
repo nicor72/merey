@@ -2,12 +2,6 @@
   text-align: center;
 }*/
 
-.modal-90w {
-  width: 95% !important;
-  max-width: none!important;
-  align-items: stretch !important;
-}
-
 .loader:empty {
   position: absolute;
   top: calc(50% - 4em);
@@ -49,10 +43,7 @@
   color: #61dafb;
 }*/
 
-.nav-height, .nav-height img {
-  height: 120px;
-  object-fit: fill
-}
+
 
 .navMenu-link {
   color: white;
