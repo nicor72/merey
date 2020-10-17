@@ -67,7 +67,7 @@ export default ({ match }) => {
           </Col>
           <Col>
             <DetailsStyle>
-              <h3 className="p-5">{product.nombre_de_productos}</h3>
+              <h3>{product.nombre_de_productos}</h3>
               <h3><strong>$ {Number.format(product.precio_de_venta)}</strong></h3>
               <InputNumber
                 productCode={product.codigo}

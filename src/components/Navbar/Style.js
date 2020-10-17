@@ -7,6 +7,11 @@ export default styled.div`
     background-color: black !important;
   }
 
+  .nav-height img {
+    height: 120px;
+    object-fit: fill
+  }
+
   ul {
     list-style-type: none;
   }
@@ -43,9 +48,21 @@ export default styled.div`
     padding: 1rem;
   }
 
-  @media (min-width: 992px) {
+  svg {
+    display: none;
+  }
+
+  @media (max-width: 992px) {
     svg {
-      display: none;
+      display: block;
+    }
+
+    .nav-height img {
+      height: 64px;
+    }
+
+    .clearfix {
+      height: 5rem;
     }
   }
 `

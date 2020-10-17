@@ -93,7 +93,7 @@ export default ({ productCode, availables, spans, removeProduct = true }) => {
         ? quantity === 0
           ? <Button
               variant="light"
-              size="lg"
+              size="md"
               onClick={() => dispatch({type: 'ADD_PRODUCT', productCode})}
             >
               Añadir al carrito
@@ -123,7 +123,7 @@ export default ({ productCode, availables, spans, removeProduct = true }) => {
             </div>
         : <Button
             variant="light"
-            size="lg"
+            size="md"
             disabled
           >
             Agotado
