@@ -1,60 +1,78 @@
-import React, { Component } from 'react';
+import React from 'react'
+import emailjs from 'emailjs-com'
 
-const encode = (data) => {
-  return Object.keys(data)
-      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-      .join("&");
-}
+const Form = () => {
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    message: ''
+  })
 
-class Form extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { name: "", email: "", message: "" };
+  const handleChange = (name, value) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value
+    }))
   }
 
-  /* Here’s the juicy bit for posting the form submission */
+  const handleSubmit = (e) => {
+    e.preventDefault()
 
-  handleSubmit = e => {
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({ "form-name": "contact", ...this.state })
-    })
-      .then(() => alert("Mensaje enviado correctamente!"))
-      .catch(error => alert(error));
+    emailjs.send('default_service', 'template_pHSrlqnp', formData, 'user_ooCeVcyqOeUeSCvH4M2Vk')
+      .then((result) => {
+        console.log(result.text)
+      }, (error) => {
+        console.log(error.text)
+      });
+  }
 
-    e.preventDefault();
-  };
+  var formStyle = {
+    paddingBottom: 300 + 'px',
+    paddingTop: 30 + 'px'
+  }
 
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
-
-  render() {
-    var formStyle = {
-      paddingBottom: 300 + 'px',
-      paddingTop: 30 + 'px'
-    }
-
-    const { name, email, message } = this.state;
-
-    return (
+  return (
       <div className="container" style={formStyle}>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="row justify-content-md-center">
             <div className="form-group col-md-6">
               <label htmlFor="name">Nombre</label>
-              <input id="name" className="form-control" type="text" name="name" value={name} onChange={this.handleChange} placeholder="Ingresa un nombre"/>
+              <input 
+                id="name" 
+                type="text" 
+                name="name" 
+                className="form-control" 
+                placeholder="Ingresa un nombre"
+                value={formData.name}
+                onChange={({target: {value}}) => handleChange('name', value)} 
+              />
             </div>
           </div>
           <div className="row justify-content-md-center">
             <div className="form-group col-md-6">
-              <label htmlFor="email">Password</label>
-              <input id="email" className="form-control" type="email" name="email" value={email} onChange={this.handleChange} placeholder="Ingresa un email"/>
+              <label htmlFor="email">Correo electrónico</label>
+              <input 
+                id="email" 
+                type="email" 
+                name="email" 
+                className="form-control" 
+                placeholder="Ingresa un email"
+                value={formData.email}
+                onChange={({target: {value}}) => handleChange('email', value)} 
+              />
             </div>
           </div>
           <div className="row justify-content-md-center">
             <div className="form-group col-md-6">
               <label className="form-check-label" htmlFor="message">Mensaje</label>
-              <textarea id="message" className="form-control" name="message" value={message} onChange={this.handleChange} placeholder="Ingresa un mensaje"/>
+              <textarea 
+                id="message" 
+                name="message" 
+                className="form-control" 
+                placeholder="Ingresa un mensaje"
+                value={formData.message}
+                onChange={({target: {value}}) => handleChange('message', value)} 
+              />
             </div>
           </div>
           <div className="row justify-content-md-center">
@@ -64,8 +82,7 @@ class Form extends Component {
           </div>  
         </form>
       </div>  
-    );
-  }
+  )
 }
 
-export default Form;
+export default Form

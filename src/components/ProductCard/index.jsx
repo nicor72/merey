@@ -6,7 +6,7 @@ import Wrapper from './Style'
 
 export default ({product, matchUrl}) => {
   const Number = new Intl.NumberFormat("de-DE")
-  const firstPhoto = product.url_fotos ? product.url_fotos.split(',')[0] : ''
+  const firstPhoto = product.fotos ? product.fotos.split(',')[0] : ''
 
   const spans = {
     xs: {
@@ -28,8 +28,8 @@ export default ({product, matchUrl}) => {
       <Link to={`${matchUrl}/${product.codigo}`}>
         <div className="product-img" />
         <div className="product-details">
-          <p className="product-name">{`${product.nombre_de_productos} ${product.formato}`}</p>
-          <p>{`$ ${Number.format(product.precio_de_venta)}`}</p>
+          <p className="product-name">{`${product.nombre} ${product.formato_web} ${product.variante_web}`}</p>
+          <p>{`$ ${Number.format(product.precio_web)}`}</p>
         </div>
       </Link>
       <InputNumber

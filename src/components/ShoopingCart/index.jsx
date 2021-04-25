@@ -17,18 +17,20 @@ export default ({ modalShow, setModalShow }) => {
   if (queryProducts.data && modalShow) {
     cart.map((product) => {
       const {
-        precio_de_venta,
-        nombre_de_productos,
+        precio_web,
+        nombre,
         cantidad_disponible,
-        formato,
-        url_fotos
+        formato_web,
+        variante_web,
+        fotos
       } = queryProducts.data.productos.find(({codigo}) => codigo === product.codigo)
 
-      product.precio_de_venta = precio_de_venta
-      product.nombre_de_productos = nombre_de_productos
+      product.precio_web = precio_web
+      product.nombre = nombre
       product.cantidad_disponible = cantidad_disponible
-      product.formato = formato
-      product.url_fotos = url_fotos
+      product.formato_web = formato_web
+      product.variante_web = variante_web
+      product.fotos = fotos
       
       return true
     })
@@ -68,11 +70,11 @@ export default ({ modalShow, setModalShow }) => {
             <Modal.Footer style={{ justifyContent: 'space-around' }}>
               <strong>
                 Total ${
-                  Number.format(
-                    cart.reduce((acc, { cantidad, precio_de_venta }) =>
-                      acc = acc + (cantidad * precio_de_venta)
+                  // Number.format(
+                    cart.reduce((acc, { cantidad, precio_web }) =>
+                      acc = acc + (cantidad * precio_web)
                     , 0)
-                  )
+                  // )
                 }
               </strong>
               <Link to="/confirmar" onClick={() => setModalShow(false)}>

@@ -8,8 +8,8 @@ import Wrapper from './Style'
 export default ({ product }) => {
   const dispatch = useDispatch()
   const Number = new Intl.NumberFormat("de-DE")
-  const subtotal = product.precio_de_venta * product.cantidad
-  const firstPhoto = product.url_fotos ? product.url_fotos.split(',')[0] : ''
+  const subtotal = product.precio_web * product.cantidad
+  const firstPhoto = product.fotos ? product.fotos.split(',')[0] : ''
   
   // const spans = {
   //   xs: {
@@ -33,7 +33,7 @@ export default ({ product }) => {
           <Card.Body>
             <Row>
               <Col xs="10">
-                <p><span>{product.nombre_de_productos}</span></p>
+                <p><span>{product.nombre}</span></p>
               </Col>
               <Col xs="2">
                 <button
@@ -48,9 +48,9 @@ export default ({ product }) => {
                 <Image src={firstPhoto || logo} thumbnail />
               </Col>
               <Col>
-                <p><em>{product.formato}</em></p>
+                <p><em>{product.formato_web} {product.variante_web}</em></p>
                 <p>
-                  <em>{product.cantidad} x {product.precio_de_venta}</em>
+                  <em>{product.cantidad} x {product.precio_web}</em>
                 </p>
                 <p>
                   Subtotal:

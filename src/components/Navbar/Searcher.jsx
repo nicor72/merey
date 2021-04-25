@@ -36,7 +36,7 @@ export default ({setShowNav}) => {
     <Wrapper>
       <AsyncTypeahead
         id="async-example"
-        labelKey="nombre_de_productos"
+        labelKey="nombre"
         isLoading={loading}
         minLength={0}
         onSearch={(query) => getProducts({ variables: { name: `%${query}%` }})}
@@ -50,7 +50,7 @@ export default ({setShowNav}) => {
           <ListGroup.Item action
             onClick={() => handleClick(option)}
           >
-            {option.nombre_de_productos}
+            {option.nombre}
           </ListGroup.Item>
         }
       >
