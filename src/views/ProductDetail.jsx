@@ -26,7 +26,7 @@ export default ({ match }) => {
 
   const Number = new Intl.NumberFormat("de-DE")
   const product = data.productos[0]
-  const productPhotos = product.url_fotos ? product.url_fotos.split(',') : []
+  const productPhotos = product.fotos ? product.fotos.split(',') : []
 
   const spans = {
     xs: {
@@ -67,14 +67,14 @@ export default ({ match }) => {
           </Col>
           <Col>
             <DetailsStyle>
-              <h3>{product.nombre_de_productos}</h3>
-              <h3><strong>$ {Number.format(product.precio_de_venta)}</strong></h3>
+              <h3>{product.nombre}</h3>
+              <h3><strong>$ {Number.format(product.precio_web)}</strong></h3>
               <InputNumber
                 productCode={product.codigo}
                 availables={product.cantidad_disponible}
                 spans={spans}
               />
-              <p><strong>Presentación: </strong>{product.formato}</p>
+              <p><strong>Presentación: </strong>{product.formato_web} {product.variante_web}</p>
               <p><strong>Disponibles: </strong>{product.cantidad_disponible}</p>
               <p><strong>Origen:</strong> {product.origen}</p>
               <p><strong>Ingredientes:</strong> {product.ingredientes}</p>
