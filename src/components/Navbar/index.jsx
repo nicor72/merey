@@ -29,6 +29,10 @@ export default () => {
       <RiRoadMapFill size={32} className="pr-2" />
       Estamos
     </Link>,
+    <Link to="/preguntas" className="nav-link" onClick={() => setShowNav(false)}>
+      <RiRoadMapFill size={32} className="pr-2" />
+      Preguntas frecuentes
+    </Link>,
     <Link to="/contacto" className="nav-link" onClick={() => setShowNav(false)}>
       <RiChatSmile3Fill size={32} className="pr-2"/>
       Contacto
@@ -46,6 +50,7 @@ export default () => {
             <Link to="/empresa" className="nav-link">Empresa</Link>
             <Link to="/productos" className="nav-link">Productos</Link>
             <Link to="/estamos" className="nav-link">Estamos</Link>
+            <Link to="/preguntas" className="nav-link">Preguntas frecuentes</Link>
             <Link to="/contacto" className="nav-link">Contacto</Link>
           </Nav>
           <Searcher setShowNav={setShowNav}/>
