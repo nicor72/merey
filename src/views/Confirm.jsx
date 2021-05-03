@@ -1,12 +1,14 @@
 import React from 'react'
+import ReactDOMServer from 'react-dom/server';
 import emailjs from 'emailjs-com'
 import { useQuery } from '@apollo/react-hooks'
 import { PRODUCT_BY_ID } from '../graphql/queries/productos'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Formik} from 'formik'
-import { Col, Form, Button, Spinner, Alert } from 'react-bootstrap'
+import { Col, Form, Button, Spinner, Alert, Table } from 'react-bootstrap'
 
 export default () => {
+  const dispatch = useDispatch()
   const { cart } = useSelector((state) => state)
   const [email, setEmail] = React.useState({
     sending: false,
@@ -42,44 +44,122 @@ export default () => {
     })
   }
 
+  console.log(cart)
+
   const shippingCosts = {
-    'VITACURA': 3600,
-    'LAS CONDES': 3600,
-    'LA REINA': 3600,
-    'PROVIDENCIA': 3600,
-    'NUÑOA': 3600,
-    'SANTIAGO CENTRO': 3600,
-    'LO BARNECHEA': 4200,
-    'PEÑALOLÉN': 4200,
-    'INDEPENDENCIA': 4200,
-    'RECOLETA': 4200,
-    'HUECHURABA': 4200,
-    'CERRO NAVIA': 4800,
-    'LO PRADO': 4800,
-    'QUINTA NORMAL': 4800,
-    'RENCA': 4800,
-    'CONCHALI': 4800,
-    'LA CISTERNA': 4800,
-    'LA GRANJA': 4800,
-    'LO ESPEJO': 4800,
-    'PEDRO AGUIRRE CERDA': 4800,
-    'SAN JOAQUIN': 4800,
-    'SAN MIGUEL': 4800,
-    'SAN RAMÓN': 4800,
-    'MACUL': 4800,
-    'CERRILLOS': 4800,
-    'ESTACIÓN CENTRAL': 4800,
-    'LA FLORIDA': 5400,
-    'PUENTE ALTO': 5400,
-    'PUDAHUEL': 5400,
-    'QUILICURA': 5400,
-    'SAN BERNARDO': 5400,
-    'MAIPU': 5400
+    'LA REINA': 2700,
+    'LAS CONDES': 2700,
+    'LO BARNECHEA': 2700,
+    'PEÑALOLÉN': 2700,
+    'VITACURA': 2700,
+    'MACUL': 3100,
+    'ÑUÑOA': 3100,
+    'PROVIDENCIA': 3100,
+    'SAN JOAQUÍN': 3100,
+    'SAN MIGUEL': 3100,
+    'SANTIAGO CENTRO': 3100,
+    'CARRILLOS': 3700,
+    'CERRO NAVIA': 3700,
+    'ESTACIÓN CENTRAL': 3700,
+    'LO ESPEJO': 3700,
+    'LO PRADO': 3700,
+    'MAIPÚ': 3700,
+    'PEDRO AGUIERRE CERDA': 3700,
+    'PUDAHUEL': 3700,
+    'QUINTA NORMAL': 3700,
+    'SECTOR NORTE ': 3800,
+    'CONCHALÍ': 3800,
+    'HUECHURABA': 3800,
+    'INDEPENDENCIA': 3800,
+    'QUILICURA': 3800,
+    'RECOLETA': 3800,
+    'RENCA': 3800,
+    'EL BOSQUE': 3900,
+    'LA CISTERNA': 3900,
+    'LA FLORIDA': 3900,
+    'LA GRANJA': 3900,
+    'LA PINTANA': 3900,
+    'PUENTE ALTO': 3900,
+    'SAN BERNARDO': 3900,
+    'SAN RAMÓN': 3900,
+    'BUIN': 4200,
+    'CALERA DEL TANGO': 4200,
+    'PAINE': 4200,
+    'COLINA': 4200,
+    'CHICUREO': 4200,
+    'LAMPA': 4200,
+    'PADRE HURTADO': 4200,
+    'TALAGANTE': 4200,
+    'PEÑAFLOR': 4200,
+    'PIRQUE': 4200,
+    'SAN JOSE DEL MAIPO': 4200
   }
 
-  var formStyle = {
+  const formStyle = {
     paddingBottom: 300 + 'px',
     paddingTop: 30 + 'px'
+  }
+
+  const renderProductsTable = (values) => {
+    const tableStyle = {
+      main: {
+        width: '100%',
+        marginBottom: '1rem',
+        color: '#212529',
+        border: '1px solid #dee2e6',
+        borderCollapse: 'collapse'
+      },
+      header: {
+        borderBottomWidth: '2px',
+        verticalAlign: 'bottom',
+        borderBottom: '2px solid #dee2e6',
+        border: '1px solid #dee2e6',
+        padding: '.75rem',
+      },
+      description: {
+        border: '1px solid #dee2e6',
+        padding: '.75rem',
+        verticalAlign: 'top',
+      },
+      list: {
+        listStyle: 'none',
+        textAlign: 'right'
+      }
+    }
+    return (
+      <React.Fragment>
+        <table style={tableStyle.main}>
+          <thead>
+            <tr>
+              <th style={tableStyle.header}>Cantidad</th>
+              <th style={tableStyle.header}>Producto</th>
+              <th style={tableStyle.header}>Código</th>
+              <th style={tableStyle.header}>Formato</th>
+              <th style={tableStyle.header}>Variante</th>
+              <th style={tableStyle.header}>Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cart.map((product, key) =>
+              <tr key={key} style={key % 2 === 0 ? { backgroundColor: 'rgba(0,0,0,.05)' }: {}}>
+                <td style={tableStyle.description}>{product.cantidad}</td>
+                <td style={tableStyle.description}>{product.nombre}</td>
+                <td style={tableStyle.description}>{product.codigo}</td>
+                <td style={tableStyle.description}>{product.formato_web}</td>
+                <td style={tableStyle.description}>{product.variante_web}</td>
+                <td style={tableStyle.description}>$ {product.precio_web}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <ul style={tableStyle.list}>
+          <li>Productos: $ {cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)}</li>
+          <li>Envio {values.express ? 'Express por Calcular' : `${values.commune}: $ ${shippingCosts[values.commune]}`}</li>
+          <li>Descuentos: ------</li>
+          <li style={{ fontWeight: 'bolder'}}>Total: $ {(cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)) + shippingCosts[values.commune]}</li>
+        </ul>
+      </React.Fragment>
+    )
   }
 
   return (
@@ -105,7 +185,9 @@ export default () => {
               number: 0,
               dept: '',
               phone: 0,
-              commune: ''
+              commune: '',
+              express: false,
+              notes: ''
             }}
             validate={values => {
               const errors = {}
@@ -134,19 +216,24 @@ export default () => {
               return errors
             }}
             onSubmit={(values) => {
-              values.products = '<table><thead><tr><th>Cantidad</th><th>Producto</th><th>Código</th><th>Formato</th><th>Variante</th><th>Precio</th></tr></thead><tbody>'
-              values.products+= cart.map((product) => {
-                return `<tr><td>${product.cantidad}</td><td>${product.nombre}</td><td>${product.codigo}</td><td>${product.formato_web}</td><td>${product.variante_web}</td><td>${product.precio_web}</td></tr>`
-              })
-              values.products += `<tr></tr><tr><td></td><td></td><td></td><td>Costo de envío</td><td>${values.commune}</td><td>${shippingCosts[values.commune]}</td></tr>`
-              values.products += `<tr><td></td><td></td><td></td><td></td><td>TOTAL</td><td>${(cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)) + shippingCosts[values.commune]}</td></tr>`
-              values.products+= '</tbody></table>'
+              // values.products = '<table><thead><tr><th>Cantidad</th><th>Producto</th><th>Código</th><th>Formato</th><th>Variante</th><th>Precio</th></tr></thead><tbody>'
+              // values.products+= cart.map((product) => {
+              //   return `<tr><td>${product.cantidad}</td><td>${product.nombre}</td><td>${product.codigo}</td><td>${product.formato_web}</td><td>${product.variante_web}</td><td>${product.precio_web}</td></tr>`
+              // })
+              // values.products += `<tr></tr><tr><td></td><td></td><td></td><td>Costo de envío</td><td>${values.commune}</td><td>${shippingCosts[values.commune]}</td></tr>`
+              // values.products += `<tr><td></td><td></td><td></td><td></td><td>TOTAL</td><td>${(cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)) + shippingCosts[values.commune]}</td></tr>`
+              // values.products+= '</tbody></table>'
+
+              values.products = ReactDOMServer.renderToString(renderProductsTable(values))
 
               setEmail({ sending: true, sent: false, error: false })
+
+              console.log(values)
 
               emailjs.send(process.env.REACT_APP_EMAILJS_SERVICE, process.env.REACT_APP_EMAILJS_TEMPLATE, values, process.env.REACT_APP_EMAILJS_USERID)
                 .then((result) => {
                   setEmail({ sending: false, sent: true, error: false })
+                  dispatch({ type: 'CLEAN_CART' })
                   console.log(result.text)
                 }, (error) => {
                   setEmail({ sending: false, sent: false, error: true })
@@ -257,6 +344,7 @@ export default () => {
                         value={values.dept}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        isValid={touched.notes && !errors.notes}
                       />
                     </Form.Group>
                   </Col>
@@ -274,39 +362,53 @@ export default () => {
                   isValid={touched.commune && !errors.commune}
                   isInvalid={touched.commune && errors.commune}
                 >
-                  <option>Selecciona una comuna</option>
-                  <option value="VITACURA">VITACURA</option>
-                  <option value="LAS CONDES">LAS CONDES</option>
+                  <option value="">Selecciona una comuna</option>
                   <option value="LA REINA">LA REINA</option>
-                  <option value="PROVIDENCIA">PROVIDENCIA</option>
-                  <option value="NUÑOA">NUÑOA</option>
-                  <option value="SANTIAGO CENTRO">SANTIAGO CENTRO</option>
+                  <option value="LAS CONDES">LAS CONDES</option>
                   <option value="LO BARNECHEA">LO BARNECHEA</option>
                   <option value="PEÑALOLÉN">PEÑALOLÉN</option>
-                  <option value="INDEPENDENCIA">INDEPENDENCIA</option>
-                  <option value="RECOLETA">RECOLETA</option>
-                  <option value="HUECHURABA">HUECHURABA</option>
-                  <option value="CERRO NAVIA">CERRO NAVIA</option>
-                  <option value="LO PRADO">LO PRADO</option>
-                  <option value="QUINTA NORMAL">QUINTA NORMAL</option>
-                  <option value="RENCA">RENCA</option>
-                  <option value="CONCHALI">CONCHALI</option>
-                  <option value="LA CISTERNA">LA CISTERNA</option>
-                  <option value="LA GRANJA">LA GRANJA</option>
-                  <option value="LO ESPEJO">LO ESPEJO</option>
-                  <option value="PEDRO AGUIRRE CERDA">PEDRO AGUIRRE CERDA</option>
-                  <option value="SAN JOAQUIN">SAN JOAQUIN</option>
-                  <option value="SAN MIGUEL">SAN MIGUEL</option>
-                  <option value="SAN RAMÓN">SAN RAMÓN</option>
+                  <option value="VITACURA">VITACURA</option>
                   <option value="MACUL">MACUL</option>
-                  <option value="CERRILLOS">CERRILLOS</option>
-                  <option value="ESTACIÓN CENTRAL">ESTACIÓN CENTRAL (No incluye Meiggs)</option>
-                  <option value="LA FLORIDA">LA FLORIDA</option>
-                  <option value="PUENTE ALTO">PUENTE ALTO</option>
+                  <option value="ÑUÑOA">ÑUÑOA</option>
+                  <option value="PROVIDENCIA">PROVIDENCIA</option>
+                  <option value="SAN JOAQUÍN">SAN JOAQUÍN</option>
+                  <option value="SAN MIGUEL">SAN MIGUEL</option>
+                  <option value="SANTIAGO CENTRO">SANTIAGO CENTRO</option>
+                  <option value="CARRILLOS">CARRILLOS</option>
+                  <option value="CERRO NAVIA">CERRO NAVIA</option>
+                  <option value="ESTACIÓN CENTRAL">ESTACIÓN CENTRAL</option>
+                  <option value="LO ESPEJO">LO ESPEJO</option>
+                  <option value="LO PRADO">LO PRADO</option>
+                  <option value="MAIPÚ">MAIPÚ</option>
+                  <option value="PEDRO AGUIERRE CERDA">PEDRO AGUIERRE CERDA</option>
                   <option value="PUDAHUEL">PUDAHUEL</option>
+                  <option value="QUINTA NORMAL">QUINTA NORMAL</option>
+                  <option value="SECTOR NORTE">SECTOR NORTE</option>
+                  <option value="CONCHALÍ">CONCHALÍ</option>
+                  <option value="HUECHURABA">HUECHURABA</option>
+                  <option value="INDEPENDENCIA">INDEPENDENCIA</option>
                   <option value="QUILICURA">QUILICURA</option>
+                  <option value="RECOLETA">RECOLETA</option>
+                  <option value="RENCA">RENCA</option>
+                  <option value="EL BOSQUE">EL BOSQUE</option>
+                  <option value="LA CISTERNA">LA CISTERNA</option>
+                  <option value="LA FLORIDA">LA FLORIDA</option>
+                  <option value="LA GRANJA">LA GRANJA</option>
+                  <option value="LA PINTANA">LA PINTANA</option>
+                  <option value="PUENTE ALTO">PUENTE ALTO</option>
                   <option value="SAN BERNARDO">SAN BERNARDO</option>
-                  <option value="MAIPU">MAIPU</option>
+                  <option value="SAN RAMÓN">SAN RAMÓN</option>
+                  <option value="BUIN">BUIN</option>
+                  <option value="CALERA DEL TANGO">CALERA DEL TANGO</option>
+                  <option value="PAINE">PAINE</option>
+                  <option value="COLINA">COLINA</option>
+                  <option value="CHICUREO">CHICUREO</option>
+                  <option value="LAMPA">LAMPA</option>
+                  <option value="PADRE HURTADO">PADRE HURTADO</option>
+                  <option value="TALAGANTE">TALAGANTE</option>
+                  <option value="PEÑAFLOR">PEÑAFLOR</option>
+                  <option value="PIRQUE">PIRQUE</option>
+                  <option value="SAN JOSE DEL MAIPO">SAN JOSE DEL MAIPO</option>
                 </Form.Control>
                   <Form.Text 
                     style={{
@@ -319,14 +421,40 @@ export default () => {
                       borderRadius: '.25rem'
                     }}
                   >
-                    {values.commune ? 
-                      `Costo de envío estimado para ${values.commune}: $${shippingCosts[values.commune]}` :
+                    {values.express ?
+                      'Despacho express en 24 horas.' :
+                      'Despacho normal de 24 a 48hrs habiles.'
+                    }
+                    <br></br>
+                    {values.commune ?
+                      `${values.express ? 'Valor por calcular.' : `Costo de envío estimado para ${values.commune}: $${shippingCosts[values.commune]}`}` :
                       'Selecciona una comuna para saber el costo de envío'
                     }
                   </Form.Text>
                   <Form.Control.Feedback type="invalid">
                     {errors.commune}
                   </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group>
+                <Form.Check 
+                  id="express"
+                  name="express"
+                  type="checkbox" 
+                  label="Envio Express"
+                  value={values.express}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Referencias/Notas</Form.Label>
+                <Form.Control
+                  id="notes"
+                  name="notes"
+                  type="text"
+                  placeholder="Ejemplo: Dejar con conserje"
+                  value={values.notes}
+                  onChange={handleChange}
+                />
               </Form.Group>
               <Button variant="primary" type="submit" disabled={email.sending}>
                 {email.sending ?
@@ -335,17 +463,6 @@ export default () => {
                 }
               </Button>
             </Form>
-            // <div className="row justify-content-md-center">
-            //   <div className="form-group col-md-6">
-            //     <label htmlFor="name">Nombre</label>
-            //     <input 
-            //       type="text" 
-            //       name="name" 
-            //       className="form-control" 
-            //       placeholder="Ingresa un nombre"
-            //     />
-            //   </div>
-            // </div> 
             )}
           </Formik>
       }

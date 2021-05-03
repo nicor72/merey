@@ -9,24 +9,34 @@ export default () =>
       
       <div className="container">
         <div className="row justify-content-md-center">
-          <div className="col-sm-6">
+          <div className="col-sm-12">
             <div className="location-div">
               <div className="location-title">Horario de atención</div>
-              <div className="location-text">
-                <span style={{fontWeight:600}}>Lunes a viernes:</span><br />
-                de 9:00 a 21:00 hrs.<br /><br />
+              <div className="d-flex justify-content-between flex-wrap location-text">
+                <div>
+                  <span style={{fontWeight:600}}>Lunes a viernes:</span><br />
+                  de 10:00 a 19:00 hrs.<br /><br />
+                </div>
+                <div>
+                  <span style={{fontWeight:600}}>Sábados:</span><br />
+                  de 10:00 a 16:00 hrs.<br /><br /> 
+                </div>
+                <div>
+                  <span style={{fontWeight:600}}>Domingos:</span><br />
+                  Cerrado.<br /><br /> 
+                </div>
+                <div>
+                  <span style={{ fontWeight: 600 }}>Contamos</span><br />
+                  <span style={{ fontWeight: 600 }}>con estacionamientos</span><br />
+                </div>
+              </div>
+              {/* <div className="location-text">
               </div>
               <div className="location-text">
-                <span style={{fontWeight:600}}>Sábados:</span><br />
-                de 10:00 a 18:00 hrs.<br /><br /> 
-              </div>
-              <div className="location-text">
-                <span style={{fontWeight:600}}>Domingos:</span><br />
-                Cerrado.<br /><br /> 
-              </div>                        
+              </div>                         */}
             </div>    
           </div>
-          <div className="col-sm-6">
+          {/* <div className="col-sm-6">
             <div className="location-div">
               <div className="location-title">Estacionamientos cercanos</div>
               <div className="location-text">
@@ -38,7 +48,7 @@ export default () =>
                 Av. Apoquindo Nº 7520, Las Condes. <br /><br />
               </div>
             </div>   
-          </div> 
+          </div>  */}
         </div> 
       </div>
 

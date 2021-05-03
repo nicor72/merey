@@ -31,6 +31,9 @@ export const cart = (state = initialState, action) => {
 
       return newState
 
+    case 'CLEAN_CART':
+      return []
+
     default:
       return state
   }
