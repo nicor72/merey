@@ -1,11 +1,15 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server';
 import emailjs from 'emailjs-com'
-import { useQuery } from '@apollo/react-hooks'
+import { Redirect } from 'react-router-dom'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { PRODUCT_BY_ID } from '../graphql/queries/productos'
+import { FIND_USER } from '../graphql/queries/usuarios'
+import { CREATE_USER } from '../graphql/mutations/usuarios'
+import { CREATE_ORDER } from '../graphql/mutations/ordenes'
 import { useSelector, useDispatch } from 'react-redux'
 import { Formik} from 'formik'
-import { Col, Form, Button, Spinner, Alert, Table } from 'react-bootstrap'
+import { Col, Form, Button, Spinner, Alert } from 'react-bootstrap'
 
 export default () => {
   const dispatch = useDispatch()
@@ -20,6 +24,9 @@ export default () => {
     acc = [...acc, product.codigo]
     , [])
 
+  const [ createUser ] = useMutation(CREATE_USER)
+  const [ createOrder ] = useMutation(CREATE_ORDER)
+  const { refetch } = useQuery(FIND_USER, { skip: true })
   const queryProducts = useQuery(PRODUCT_BY_ID, { variables: { productId } })
 
   if (queryProducts.data) {
@@ -44,7 +51,11 @@ export default () => {
     })
   }
 
-  console.log(cart)
+  if (!cart.length && !email.sent) {
+    return(
+      <Redirect to="/productos" />
+    )
+  }
 
   const shippingCosts = {
     'LA REINA': 2700,
@@ -147,16 +158,18 @@ export default () => {
                 <td style={tableStyle.description}>{product.codigo}</td>
                 <td style={tableStyle.description}>{product.formato_web}</td>
                 <td style={tableStyle.description}>{product.variante_web}</td>
-                <td style={tableStyle.description}>$ {product.precio_web}</td>
+                <td style={tableStyle.description}>${product.precio_web}</td>
               </tr>
             )}
           </tbody>
         </table>
         <ul style={tableStyle.list}>
-          <li>Productos: $ {cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)}</li>
-          <li>Envio {values.express ? 'Express por Calcular' : `${values.commune}: $ ${shippingCosts[values.commune]}`}</li>
+          <li>Productos: ${cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)}</li>
+          <li>Envio {values.express ? 'Express por Calcular' : `${values.commune}: $${shippingCosts[values.commune]}`}</li>
           <li>Descuentos: ------</li>
-          <li style={{ fontWeight: 'bolder'}}>Total: $ {(cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)) + shippingCosts[values.commune]}</li>
+          <li style={{ fontWeight: 'bolder' }}>
+            Total: ${(cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)) + (values.express ? 0 : shippingCosts[values.commune])}
+          </li>
         </ul>
       </React.Fragment>
     )
@@ -215,20 +228,38 @@ export default () => {
               }
               return errors
             }}
-            onSubmit={(values) => {
-              // values.products = '<table><thead><tr><th>Cantidad</th><th>Producto</th><th>Código</th><th>Formato</th><th>Variante</th><th>Precio</th></tr></thead><tbody>'
-              // values.products+= cart.map((product) => {
-              //   return `<tr><td>${product.cantidad}</td><td>${product.nombre}</td><td>${product.codigo}</td><td>${product.formato_web}</td><td>${product.variante_web}</td><td>${product.precio_web}</td></tr>`
-              // })
-              // values.products += `<tr></tr><tr><td></td><td></td><td></td><td>Costo de envío</td><td>${values.commune}</td><td>${shippingCosts[values.commune]}</td></tr>`
-              // values.products += `<tr><td></td><td></td><td></td><td></td><td>TOTAL</td><td>${(cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)) + shippingCosts[values.commune]}</td></tr>`
-              // values.products+= '</tbody></table>'
+            onSubmit={async (values) => {
 
               values.products = ReactDOMServer.renderToString(renderProductsTable(values))
 
-              setEmail({ sending: true, sent: false, error: false })
+              const existUser = await refetch({
+                email: values.email
+              })
 
-              console.log(values)
+              let id_user = ''
+              if (existUser.data) {
+                id_user = existUser.data.usuarios[0].id
+              } else {
+                const newUser = await createUser({
+                  variables: {
+                    email: values.email,
+                    names: values.name
+                  }
+                })
+                id_user = newUser.insert_usuarios_one.id
+              }
+
+              const order = await createOrder({
+                variables: {
+                  id_user,
+                  products: JSON.stringify(cart)
+                }
+              })
+
+              const orderNumber = order.data.insert_ordenes_one.id.toString().padStart(4, "0")
+              values.order = `MT-${orderNumber}`
+
+              setEmail({ sending: true, sent: false, error: false })
 
               emailjs.send(process.env.REACT_APP_EMAILJS_SERVICE, process.env.REACT_APP_EMAILJS_TEMPLATE, values, process.env.REACT_APP_EMAILJS_USERID)
                 .then((result) => {
@@ -238,7 +269,8 @@ export default () => {
                 }, (error) => {
                   setEmail({ sending: false, sent: false, error: true })
                   console.log(error.text)
-                })
+                }
+              )
             }}
           >
             {({
@@ -247,12 +279,11 @@ export default () => {
               handleBlur,
               values,
               touched,
-              isValid,
               errors,
             }) => (
             <Form noValidate onSubmit={handleSubmit}>
               <Form.Group>
-                <Form.Label>Nombre</Form.Label>
+                <Form.Label>Nombre y Apellido</Form.Label>
                 <Form.Control
                   id="name"
                   type="text" 
@@ -443,6 +474,7 @@ export default () => {
                   label="Envio Express"
                   value={values.express}
                   onChange={handleChange}
+                  isValid={touched.express && !errors.express}
                 />
               </Form.Group>
               <Form.Group>
@@ -454,6 +486,7 @@ export default () => {
                   placeholder="Ejemplo: Dejar con conserje"
                   value={values.notes}
                   onChange={handleChange}
+                  isValid={touched.notes && !errors.notes}
                 />
               </Form.Group>
               <Button variant="primary" type="submit" disabled={email.sending}>
