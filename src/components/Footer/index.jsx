@@ -31,7 +31,7 @@ export default () =>
                 <a href="tel:+56948826938" target="_blank" rel="noopener noreferrer">+56 9 4882 6938</a>
               </ListGroup.Item>
               <ListGroup.Item>
-                <a href="mailto:ventasmereytostaduria@gmail.com" target="_blank" rel="noopener noreferrer">ventasmereytostaduria@gmail.com</a>
+                <a href="mailto:mereytostaduria@gmail.com" target="_blank" rel="noopener noreferrer">mereytostaduria@gmail.com</a>
               </ListGroup.Item>
               <ListGroup.Item>
                 <a href="https://goo.gl/maps/RjqWfruGcTu" target="_blank" rel="noopener noreferrer">Avenida Apoquindo 7482, Las Condes, Santiago</a>

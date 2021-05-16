@@ -61,7 +61,7 @@ export default ({ match }) => {
               productPhotos.length
                 ? productPhotos.length > 1 
                   ? <Carousel items={carouselItems} thumbs={true} /> 
-                  : <Image fluid src={productPhotos} />
+                  : <Image fluid src={productPhotos} onClick={() => window.open(productPhotos, '_blank').focus()} style={{ cursor: "pointer" }} />
                 : <Image fluid src={logo} />
             }
           </Col>
