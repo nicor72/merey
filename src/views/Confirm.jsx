@@ -231,28 +231,32 @@ export default () => {
             onSubmit={async (values) => {
 
               values.products = ReactDOMServer.renderToString(renderProductsTable(values))
-
-              const existUser = await refetch({
-                email: values.email
-              })
+              const { email, name, phone, street, number, dept, commune } = values
+              
+              const existUser = await refetch({ email })
 
               let id_user = ''
-              if (existUser.data) {
+              if (existUser.data.usuarios.length) {
                 id_user = existUser.data.usuarios[0].id
               } else {
                 const newUser = await createUser({
                   variables: {
-                    email: values.email,
-                    names: values.name
+                    email,
+                    name
                   }
                 })
-                id_user = newUser.insert_usuarios_one.id
+                id_user = newUser.data.insert_usuarios_one.id
               }
 
               const order = await createOrder({
                 variables: {
                   id_user,
-                  products: JSON.stringify(cart)
+                  products: JSON.stringify(cart),
+                  phone: phone.toString(),
+                  street,
+                  number: number.toString(),
+                  dept,
+                  commune
                 }
               })
 
@@ -268,7 +272,6 @@ export default () => {
                   console.log(result.text)
                 }, (error) => {
                   setEmail({ sending: false, sent: false, error: true })
-                  console.log(error.text)
                 }
               )
             }}
