@@ -9,24 +9,37 @@ export const cart = (state = initialState, action) => {
     case 'ADD_PRODUCT':
 
       const product = {
-        codigo: action.productCode,
-        cantidad: 1
+        id: action.productCode,
+        cantidad: 1,
+        selectedFormatoWeb: action.selectedFormatoWeb
       }
 
       return [...state, product]
 
     case 'UPDATE_PRODUCT':
       const stateProduct = state.find(
-        product => product.codigo === action.productCode
+        product => product.id === action.productCode
       )
 
       stateProduct.cantidad = Number(action.quantity)
 
       return [...state]
 
+    case 'UPDATE_SELECTED_FORMAT':
+      const stateFormat = state.find(
+        product => product.id === action.productCode
+      )
+
+      if (stateFormat) {
+        stateFormat.selectedFormatoWeb = action.selectedFormatoWeb
+      }
+
+
+      return [...state]
+
     case 'REMOVE_PRODUCT':
       const newState = state.filter(
-        product => product.codigo !== action.productCode
+        product => product.id !== action.productCode
       )
 
       return newState

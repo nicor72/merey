@@ -3,7 +3,11 @@ import { Col, Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Wrapper from './Style'
 
-export default ({ productCode, availables, spans, removeProduct = true }) => {
+export default ({ product, spans, removeProduct = true }) => {
+
+  const productCode = product.id
+  const availables = product.cantidad_disponible
+
   if (!spans) {
     spans = {
       xs: {
@@ -28,7 +32,7 @@ export default ({ productCode, availables, spans, removeProduct = true }) => {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    const productExist = cart.find(productCart => productCart.codigo === parseInt(productCode))
+    const productExist = cart.find(productCart => productCart.id === productCode)
     setQuantity(productExist ? productExist.cantidad : 0)
   }, [cart])
 
@@ -88,13 +92,12 @@ export default ({ productCode, availables, spans, removeProduct = true }) => {
   return (
     <Wrapper>
       <Col className="col" xs={spans.xs} md={spans.md} lg={spans.lg}>
-      {
-        availables
+      {availables
         ? quantity === 0
           ? <Button
               variant="light"
               size="md"
-              onClick={() => dispatch({type: 'ADD_PRODUCT', productCode})}
+              onClick={() => dispatch({ type: 'ADD_PRODUCT', productCode, selectedFormatoWeb: product.selectedFormatoWeb })}
             >
               Añadir al carrito
             </Button>

@@ -8,7 +8,6 @@ import Loader from '../components/Loader'
 
 export default ({ match }) => {
   const { deparment } = match.params
-
   const { loading, error, data } = useQuery(PRODUCTS_BY_DEPARTMENT, { variables: { deparment } })
 
   if (loading) return <Loader/>
@@ -19,13 +18,11 @@ export default ({ match }) => {
       <Breadcrumb />
       <Container fluid="lg">
         <Row>
-          {
-            data.productos.map((product, key) =>
-              <Col key={key} xs={12} md={6} lg={3} className="pb-4">
-                <ProductCard product={product} matchUrl={match.url}/>
-              </Col>
-            )
-          }
+          {data.productos.map((product, key) =>
+            <Col key={key} xs={12} md={6} lg={3} className="pb-4">
+              <ProductCard product={product} matchUrl={match.url} />
+            </Col>
+          )}
         </Row>
       </Container>
     </React.Fragment>

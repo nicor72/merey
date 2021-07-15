@@ -4,39 +4,22 @@ import { useSelector } from 'react-redux'
 import { Container, Modal, Button } from 'react-bootstrap'
 import { useQuery } from '@apollo/react-hooks'
 import { PRODUCT_BY_ID } from '../../graphql/queries/productos'
+import Loader from '../Loader'
 import ProductRow from './ProductRow'
 
 export default ({ modalShow, setModalShow }) => {
+  const Number = new Intl.NumberFormat("de-DE")
+
+  const [totalPrice, setTotalPrice] = React.useState([])
+
   const { cart } = useSelector((state) => state)
   const productId = cart.reduce((acc, product) =>
-    acc = [...acc, product.codigo]
+    acc = [...acc, product.id]
   , [])
 
-  const queryProducts = useQuery(PRODUCT_BY_ID, { variables: { productId } })
+  const {data, loading, error} = useQuery(PRODUCT_BY_ID, { variables: { productId } })
 
-  if (queryProducts.data && modalShow) {
-    cart.map((product) => {
-      const {
-        precio_web,
-        nombre,
-        cantidad_disponible,
-        formato_web,
-        variante_web,
-        fotos
-      } = queryProducts.data.productos.find(({codigo}) => codigo === product.codigo)
-
-      product.precio_web = precio_web
-      product.nombre = nombre
-      product.cantidad_disponible = cantidad_disponible
-      product.formato_web = formato_web
-      product.variante_web = variante_web
-      product.fotos = fotos
-      
-      return true
-    })
-  }
-
-  const Number = new Intl.NumberFormat("de-DE")
+  if (error) return <div>ERROR</div>
 
   return (
     <Container fluid="lg">
@@ -45,8 +28,6 @@ export default ({ modalShow, setModalShow }) => {
         show={modalShow}
         onHide={() => setModalShow(false)}
         aria-labelledby="contained-modal-title-vcenter"
-        // dialogClassName="modal-90w"
-        // centered
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
@@ -54,9 +35,15 @@ export default ({ modalShow, setModalShow }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {cart.length > 0 
-            ? cart.map((product, key) =>
-                <ProductRow key={key} product={product} />
+          {loading && <Loader />}
+          {data && cart.length > 0
+            ? cart.map((productCart, key) =>
+                <ProductRow 
+                  key={key} 
+                  productCart={productCart}
+                  productDetails={data.productos.find(({ id }) => id === productCart.id)}
+                  setTotalPrice={setTotalPrice}
+                />
               )
             : <div className="text-center">
                 <p>¿Aún no encuentras lo que buscas?</p>
@@ -70,11 +57,14 @@ export default ({ modalShow, setModalShow }) => {
             <Modal.Footer style={{ justifyContent: 'space-around' }}>
               <strong>
                 Total ${
-                  // Number.format(
-                    cart.reduce((acc, { cantidad, precio_web }) =>
-                      acc = acc + (cantidad * precio_web)
+                  Number.format(
+                    // cart.reduce((acc, { cantidad, precio_venta }) =>
+                    //   acc = acc + (cantidad * precio_venta)
+                    // , 0)
+                    totalPrice.reduce((acc, { cantidad, price }) =>
+                      acc = acc + (cantidad * price)
                     , 0)
-                  // )
+                  )
                 }
               </strong>
               <Link to="/confirmar" onClick={() => setModalShow(false)}>
