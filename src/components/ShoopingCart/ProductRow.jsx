@@ -4,67 +4,71 @@ import { Container, Row, Col, Card, Image } from 'react-bootstrap'
 import { RiCloseLine } from 'react-icons/ri'
 import logo from '../../images/merey_logo.svg'
 import Wrapper from './Style'
+import useProductDetails from '../../customHooks/useProductDetails'
 
-export default ({ product }) => {
+export default ({ productCart, productDetails, setTotalPrice }) => {
   const dispatch = useDispatch()
   const Number = new Intl.NumberFormat("de-DE")
-  const subtotal = product.precio_web * product.cantidad
-  const firstPhoto = product.fotos ? product.fotos.split(',')[0] : ''
-  
-  // const spans = {
-  //   xs: {
-  //     span: 12,
-  //     offset: 0
-  //   },
-  //   md: {
-  //     span: 6,
-  //     offset: 3
-  //   },
-  //   lg: {
-  //     span: 6,
-  //     offset: 3
-  //   }
-  // }
+  const { productState, getPrettyFormat, getPrice } = useProductDetails(productDetails)
+
+  React.useEffect(() => {
+    if (productState) {
+      setTotalPrice((current) => [
+        ...current,
+        {
+          id: productCart.id,
+          cantidad: productCart.cantidad || 0, 
+          price: getPrice({ ...productState, selectedFormatoWeb: productCart.selectedFormatoWeb}) || 0
+        }
+      ])
+    }
+  }, [productState])
 
   return (
     <Wrapper>
       <Container>
         <Card>
-          <Card.Body>
-            <Row>
-              <Col xs="10">
-                <p><span>{product.nombre}</span></p>
-              </Col>
-              <Col xs="2">
-                <button
-                  onClick={() => dispatch({ type: 'REMOVE_PRODUCT', productCode: product.codigo })}
-                >
-                  <RiCloseLine size={16} />
-                </button>
-              </Col>
-            </Row>
-            <Row className="product-details">
-              <Col>
-                <Image src={firstPhoto || logo} thumbnail />
-              </Col>
-              <Col>
-                <p><em>{product.formato_web} {product.variante_web}</em></p>
-                <p>
-                  <em>{product.cantidad} x {product.precio_web}</em>
-                </p>
-                <p>
-                  Subtotal:
-                  <strong>
-                    ${
-                      !isNaN(subtotal)
-                        ? Number.format(subtotal)
-                        : ''
-                    }
-                  </strong>
-                </p>
-              </Col>
-            </Row>
-          </Card.Body>
+          {productState &&
+            <Card.Body>
+              <Row>
+                <Col xs="10">
+                  <p><span>{productState.nombre}</span></p>
+                </Col>
+                <Col xs="2">
+                  <button
+                    onClick={() => dispatch({ type: 'REMOVE_PRODUCT', productCode: productState.id })}
+                  >
+                    <RiCloseLine size={16} />
+                  </button>
+                </Col>
+              </Row>
+              <Row className="product-details">
+                <Col>
+                <Image src={productState.fotos ? productState.fotos.split(',')[0] : logo} thumbnail />
+                </Col>
+                <Col>
+                  <p>
+                    <em>
+                      {getPrettyFormat(productCart.selectedFormatoWeb / 1000)}
+                    </em>
+                  </p>
+                  <p>
+                  <em>{productCart.cantidad} x {Number.format(getPrice({ ...productState, selectedFormatoWeb: productCart.selectedFormatoWeb }))}</em>
+                  </p>
+                  <p>
+                    Subtotal:
+                    <strong>
+                      ${
+                      !isNaN(getPrice({ ...productState, selectedFormatoWeb: productCart.selectedFormatoWeb }) * productCart.cantidad)
+                        ? Number.format(getPrice({ ...productState, selectedFormatoWeb: productCart.selectedFormatoWeb }) * productCart.cantidad)
+                          : ''
+                      }
+                    </strong>
+                  </p>
+                </Col>
+              </Row>
+            </Card.Body>
+          }
         </Card>
       </Container>
     </Wrapper>

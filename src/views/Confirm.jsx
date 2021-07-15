@@ -10,10 +10,15 @@ import { CREATE_ORDER } from '../graphql/mutations/ordenes'
 import { useSelector, useDispatch } from 'react-redux'
 import { Formik} from 'formik'
 import { Col, Form, Button, Spinner, Alert } from 'react-bootstrap'
+import ProductsTable from '../components/ProductsTable/ProductsTable'
+import { shippingCosts } from '../components/ProductsTable/ProductTableConstants'
 
 export default () => {
   const dispatch = useDispatch()
   const { cart } = useSelector((state) => state)
+
+  const titleRef = React.useRef(null)
+  
   const [email, setEmail] = React.useState({
     sending: false,
     sent: false,
@@ -21,7 +26,7 @@ export default () => {
   })
 
   const productId = cart.reduce((acc, product) =>
-    acc = [...acc, product.codigo]
+    acc = [...acc, product.id]
     , [])
 
   const [ createUser ] = useMutation(CREATE_USER)
@@ -30,22 +35,39 @@ export default () => {
   const queryProducts = useQuery(PRODUCT_BY_ID, { variables: { productId } })
 
   if (queryProducts.data) {
-    cart.map((product) => {
-      const {
-        precio_web,
-        nombre,
-        cantidad_disponible,
-        formato_web,
-        variante_web,
-        fotos
-      } = queryProducts.data.productos.find(({ codigo }) => codigo === product.codigo)
+    cart.map((productCart) => {
+      const productDetails = queryProducts.data.productos.find(({ id }) => id === productCart.id)
 
-      product.precio_web = precio_web
-      product.nombre = nombre
-      product.cantidad_disponible = cantidad_disponible
-      product.formato_web = formato_web
-      product.variante_web = variante_web
-      product.fotos = fotos
+      // const productState = initProductDetails(productDetails)
+
+      // const formatosVenta = formato_venta.replace(',', '.').split(';')
+      // const precioVenta = precio_venta * formatosVenta[0]
+
+      // let prettyFormat = formatosVenta[0]
+      // let variante = 'kg'
+      // if (formatosVenta[0] < 1) {
+      //   prettyFormat = formatosVenta[0] * 1000
+      //   variante = 'grs'
+      // }
+
+      // product.precio_web = precioVenta
+      // product.nombre = nombre
+      // product.cantidad_disponible = cantidad_disponible
+      // product.formato_web = prettyFormat
+      // product.variante_web = variante
+      // product.fotos = fotos
+
+      const formatosWeb = productDetails.formato_web.split(',')
+      const formatoVenta = productDetails.formato_venta.replace(',', '.')
+
+      let price
+      if (formatosWeb.length > 1) {
+        price = (productDetails.precio_venta * (productCart.selectedFormatoWeb / 1000))
+      } else {
+        price = (productDetails.precio_venta * formatoVenta)
+      }
+      
+      productCart.price = price
 
       return true
     })
@@ -57,126 +79,26 @@ export default () => {
     )
   }
 
-  const shippingCosts = {
-    'LA REINA': 2700,
-    'LAS CONDES': 2700,
-    'LO BARNECHEA': 2700,
-    'PEÑALOLÉN': 2700,
-    'VITACURA': 2700,
-    'MACUL': 3100,
-    'ÑUÑOA': 3100,
-    'PROVIDENCIA': 3100,
-    'SAN JOAQUÍN': 3100,
-    'SAN MIGUEL': 3100,
-    'SANTIAGO CENTRO': 3100,
-    'CARRILLOS': 3700,
-    'CERRO NAVIA': 3700,
-    'ESTACIÓN CENTRAL': 3700,
-    'LO ESPEJO': 3700,
-    'LO PRADO': 3700,
-    'MAIPÚ': 3700,
-    'PEDRO AGUIERRE CERDA': 3700,
-    'PUDAHUEL': 3700,
-    'QUINTA NORMAL': 3700,
-    'SECTOR NORTE ': 3800,
-    'CONCHALÍ': 3800,
-    'HUECHURABA': 3800,
-    'INDEPENDENCIA': 3800,
-    'QUILICURA': 3800,
-    'RECOLETA': 3800,
-    'RENCA': 3800,
-    'EL BOSQUE': 3900,
-    'LA CISTERNA': 3900,
-    'LA FLORIDA': 3900,
-    'LA GRANJA': 3900,
-    'LA PINTANA': 3900,
-    'PUENTE ALTO': 3900,
-    'SAN BERNARDO': 3900,
-    'SAN RAMÓN': 3900,
-    'BUIN': 4200,
-    'CALERA DEL TANGO': 4200,
-    'PAINE': 4200,
-    'COLINA': 4200,
-    'CHICUREO': 4200,
-    'LAMPA': 4200,
-    'PADRE HURTADO': 4200,
-    'TALAGANTE': 4200,
-    'PEÑAFLOR': 4200,
-    'PIRQUE': 4200,
-    'SAN JOSE DEL MAIPO': 4200
-  }
-
   const formStyle = {
     paddingBottom: 300 + 'px',
     paddingTop: 30 + 'px'
   }
 
-  const renderProductsTable = (values) => {
-    const tableStyle = {
-      main: {
-        width: '100%',
-        marginBottom: '1rem',
-        color: '#212529',
-        border: '1px solid #dee2e6',
-        borderCollapse: 'collapse'
-      },
-      header: {
-        borderBottomWidth: '2px',
-        verticalAlign: 'bottom',
-        borderBottom: '2px solid #dee2e6',
-        border: '1px solid #dee2e6',
-        padding: '.75rem',
-      },
-      description: {
-        border: '1px solid #dee2e6',
-        padding: '.75rem',
-        verticalAlign: 'top',
-      },
-      list: {
-        listStyle: 'none',
-        textAlign: 'right'
-      }
-    }
+  const renderProductsTable = (shippingData) => {
     return (
-      <React.Fragment>
-        <table style={tableStyle.main}>
-          <thead>
-            <tr>
-              <th style={tableStyle.header}>Cantidad</th>
-              <th style={tableStyle.header}>Producto</th>
-              <th style={tableStyle.header}>Código</th>
-              <th style={tableStyle.header}>Formato</th>
-              <th style={tableStyle.header}>Variante</th>
-              <th style={tableStyle.header}>Precio</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cart.map((product, key) =>
-              <tr key={key} style={key % 2 === 0 ? { backgroundColor: 'rgba(0,0,0,.05)' }: {}}>
-                <td style={tableStyle.description}>{product.cantidad}</td>
-                <td style={tableStyle.description}>{product.nombre}</td>
-                <td style={tableStyle.description}>{product.codigo}</td>
-                <td style={tableStyle.description}>{product.formato_web}</td>
-                <td style={tableStyle.description}>{product.variante_web}</td>
-                <td style={tableStyle.description}>${product.precio_web}</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-        <ul style={tableStyle.list}>
-          <li>Productos: ${cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)}</li>
-          <li>Envio {values.express ? 'Express por Calcular' : `${values.commune}: $${shippingCosts[values.commune]}`}</li>
-          <li>Descuentos: ------</li>
-          <li style={{ fontWeight: 'bolder' }}>
-            Total: ${(cart.reduce((acc, { cantidad, precio_web }) => acc = acc + (cantidad * precio_web), 0)) + (values.express ? 0 : shippingCosts[values.commune])}
-          </li>
-        </ul>
-      </React.Fragment>
+      <ProductsTable 
+        cart={cart}
+        productsDetails={queryProducts.data.productos}
+        shippingData={shippingData}
+        totalPrice={cart.reduce((acc, { cantidad, price }) => 
+          acc = acc + (cantidad * price)
+        , 0)}
+      />
     )
   }
 
   return (
-    <div className="container medium-margin-top">
+    <div ref={titleRef} className="container medium-margin-top">
       <h1 className="sub-main-title">
         CONFIRMACIÓN DE COTIZACIÓN
       </h1>
@@ -269,7 +191,7 @@ export default () => {
                 .then((result) => {
                   setEmail({ sending: false, sent: true, error: false })
                   dispatch({ type: 'CLEAN_CART' })
-                  console.log(result.text)
+                  titleRef.current.scrollIntoView({ block: "end", behavior: "smooth" })
                 }, (error) => {
                   setEmail({ sending: false, sent: false, error: true })
                 }
