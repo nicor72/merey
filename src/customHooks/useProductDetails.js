@@ -14,10 +14,28 @@ const useProductDetails = (data) => {
     return price
   }
 
-  const getPrettyFormat = (formato) => {
-    let prettyFormat = `${formato} kg`
+  const getVariantArray = (variant) => {
+    switch (variant) {
+      case 'ml':
+      case 'ltr':
+        return ['ml', 'ltr']
+      case 'cm':
+      case 'mtrs':
+        return ['cm', 'mtrs']
+      case 'sobres':
+        return ['sobres', 'sobres']
+      case 'cap':
+        return ['cap', 'cap']
+      default:
+        return ['grs', 'kg']
+    }
+  }
+
+  const getPrettyFormat = (formato, variant = 'grs') => {
+    const variantArray = getVariantArray(variant)
+    let prettyFormat = `${formato} ${variantArray[1]}`
     if (formato < 1) {
-      prettyFormat = `${formato * 1000} grs`
+      prettyFormat = `${formato * 1000} ${variantArray[0]}`
     }
 
     return prettyFormat
@@ -41,9 +59,9 @@ const useProductDetails = (data) => {
     let prettyFormat
     if (formatosWeb.length > 1) {
       // price = (precioVenta * (formatosWeb[0] / 1000))
-      prettyFormat = getPrettyFormat(formatosWeb[0] / 1000)
+      prettyFormat = getPrettyFormat(formatosWeb[0] / 1000, product.variante_web)
     } else {
-      prettyFormat = getPrettyFormat(formatoVenta)
+      prettyFormat = getPrettyFormat(formatoVenta, product.variante_web)
       // price = (precioVenta * formatoVenta)
     }
 
