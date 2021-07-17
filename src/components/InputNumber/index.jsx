@@ -122,6 +122,7 @@ export default ({ product, spans, removeProduct = true }) => {
                 className="button button-minus"
                 onClick={(e) => handleUpdate(e, 'increment')}
               />
+              <div style={{ flexBasis: '100%', height: 0 }}></div>
               <p><em>Disponibles {availables} unidades</em></p>
             </div>
         : <Button

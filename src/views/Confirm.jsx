@@ -67,7 +67,7 @@ export default () => {
         price = (productDetails.precio_venta * formatoVenta)
       }
       
-      productCart.price = price
+      productCart.price = price.toFixed()
 
       return true
     })

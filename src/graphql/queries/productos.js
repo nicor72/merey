@@ -1,10 +1,10 @@
 import { gql } from "apollo-boost"
 
 export const PRODUCTS_BY_DEPARTMENT = gql`
-  query productsByDeparments($deparment: String) {
+  query productsByDeparments($deparment: smallint) {
     productos(
       where: { 
-        nombre_depto: {_eq: $deparment},
+        n_dep: {_eq: $deparment},
         precio_venta: {_gt: 0} 
       }, 
       order_by: {nombre: asc}
