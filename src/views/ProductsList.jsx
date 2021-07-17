@@ -8,7 +8,7 @@ import Loader from '../components/Loader'
 
 export default ({ match }) => {
   const { deparment } = match.params
-  const { loading, error, data } = useQuery(PRODUCTS_BY_DEPARTMENT, { variables: { deparment } })
+  const { loading, error, data } = useQuery(PRODUCTS_BY_DEPARTMENT, { variables: { deparment: parseInt(deparment, 10) } })
 
   if (loading) return <Loader/>
   if (error) return <div>ERROR</div>

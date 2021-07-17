@@ -11,7 +11,7 @@ const useProductDetails = (data) => {
       price = (product.precioVenta * product.formatoVenta)
     }
 
-    return price
+    return price.toFixed()
   }
 
   const getVariantArray = (variant) => {
